@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { createSupabaseClient } from '@/lib/supabase'
 import type { ArticlePreview } from '@/lib/types'
 import { CATEGORY_SLUGS, CATEGORY_CHILDREN, CATEGORY_PARENT } from '@/lib/categories'
+import { readingTime } from '@/lib/content'
 
 function getCategoryName(slug: string): string | null {
   return CATEGORY_SLUGS[slug] ?? null
@@ -45,7 +46,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
   const [{ data: articleData }, { data: allCatData }, { data: siblingCountData }] = await Promise.all([
     supabase
       .from('articles')
-      .select('id, title, slug, category, author, published_at, featured')
+      .select('id, title, slug, category, author, published_at, featured, content')
       .eq('status', 'published')
       .or(`category.eq.${categoryName},tags.cs.{${categoryName}}`)
       .order('title'),
@@ -65,7 +66,8 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
       : Promise.resolve({ data: [] }),
   ])
 
-  const articles = (articleData ?? []) as ArticlePreview[]
+  type ArticleRow = ArticlePreview & { content: string | null }
+  const articles = (articleData ?? []) as ArticleRow[]
 
   // Count articles per child category
   const countMap: Record<string, number> = {}
@@ -124,10 +126,10 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
             <span>›</span>
             <Link href="/topics" className="hover:text-white transition-colors">Topics</Link>
             {breadcrumb.map((crumb) => (
-              <>
-                <span key={crumb.href + '-sep'}>›</span>
-                <Link key={crumb.href} href={crumb.href} className="hover:text-white transition-colors">{crumb.label}</Link>
-              </>
+              <span key={crumb.href} className="contents">
+                <span>›</span>
+                <Link href={crumb.href} className="hover:text-white transition-colors">{crumb.label}</Link>
+              </span>
             ))}
             <span>›</span>
             <span className="text-white/70">{categoryName}</span>
@@ -177,18 +179,24 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
                   </h2>
                 )}
                 <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                  <div className="flex items-center px-6 py-2.5 border-b border-slate-100 bg-slate-50">
+                    <span className="flex-1 text-[11px] font-semibold text-slate-400 uppercase tracking-widest">Title</span>
+                    <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest w-32 text-right">Author</span>
+                    <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest w-16 text-right">Read</span>
+                  </div>
                   <ul className="divide-y divide-slate-100">
                     {articles.map((article) => (
                       <li key={article.slug}>
-                        <Link href={`/articles/${article.slug}`} className="flex items-start px-6 py-3.5 hover:bg-[#faf8ff] transition-colors group">
-                          <div className="flex-1 min-w-0">
-                            <p className="font-semibold text-[#111111] group-hover:text-[#7c3aed] transition-colors leading-snug text-sm">
-                              {article.title}
-                            </p>
-                            {article.author && (
-                              <p className="text-xs text-slate-400 mt-0.5">{article.author}</p>
-                            )}
-                          </div>
+                        <Link href={`/articles/${article.slug}`} className="flex items-center px-6 py-3.5 hover:bg-[#faf8ff] transition-colors group">
+                          <p className="flex-1 font-semibold text-[#111111] group-hover:text-[#7c3aed] transition-colors leading-snug text-sm pr-4">
+                            {article.title}
+                          </p>
+                          <span className="text-xs text-slate-400 w-32 text-right shrink-0 leading-snug">
+                            {article.author ?? ''}
+                          </span>
+                          <span className="text-xs text-slate-400 w-16 text-right shrink-0">
+                            {readingTime(article.content ?? '')} min
+                          </span>
                         </Link>
                       </li>
                     ))}

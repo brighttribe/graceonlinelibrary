@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { createSupabaseClient } from '@/lib/supabase'
-import { prepareContent } from '@/lib/content'
+import { prepareContent, readingTime } from '@/lib/content'
 import { categorySlug } from '@/lib/categories'
 import AuthorBio from '@/components/AuthorBio'
 
@@ -215,8 +215,3 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   )
 }
 
-function readingTime(html: string): number {
-  const text = html.replace(/<[^>]+>/g, ' ')
-  const words = text.trim().split(/\s+/).filter(Boolean).length
-  return Math.max(1, Math.ceil(words / 250))
-}
