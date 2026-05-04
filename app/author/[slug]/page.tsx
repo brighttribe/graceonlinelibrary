@@ -15,6 +15,12 @@ type Author = {
   article_count: number | null
 }
 
+export async function generateStaticParams() {
+  const supabase = createSupabaseClient()
+  const { data } = await supabase.from('authors').select('slug').gt('article_count', 0)
+  return (data ?? []).map((a) => ({ slug: a.slug }))
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
   const supabase = createSupabaseClient()
