@@ -58,7 +58,7 @@ export default async function SeriesNav({
                 </div>
               ) : (
                 <Link
-                  href={`/articles/${part.slug}`}
+                  href={`/${part.slug}`}
                   className="flex items-baseline gap-3 px-5 py-3 group transition-colors hover:bg-[#fff5f5]"
                 >
                   <span

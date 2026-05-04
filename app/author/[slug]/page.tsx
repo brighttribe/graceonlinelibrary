@@ -127,7 +127,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
             {categories.map((cat) => (
               <div key={cat}>
                 <div className="flex items-center justify-between mb-3">
-                  <Link href={`/category/${categorySlug(cat)}`} className="text-xs font-semibold text-slate-400 uppercase tracking-widest hover:text-[#dc2626] transition-colors">
+                  <Link href={`/${categorySlug(cat)}`} className="text-xs font-semibold text-slate-400 uppercase tracking-widest hover:text-[#dc2626] transition-colors">
                     {cat}
                   </Link>
                   <span className="text-xs text-slate-300">{byCategory[cat].length}</span>
@@ -136,7 +136,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
                   <ul className="divide-y divide-slate-100">
                     {byCategory[cat].map((article) => (
                       <li key={article.slug}>
-                        <Link href={`/articles/${article.slug}`} className="flex items-start justify-between px-6 py-4 hover:bg-[#fff5f5] transition-colors group">
+                        <Link href={`/${article.slug}`} className="flex items-start justify-between px-6 py-4 hover:bg-[#fff5f5] transition-colors group">
                           <div className="flex-1 pr-4">
                             <p className="font-semibold text-[#111111] group-hover:text-[#dc2626] transition-colors leading-snug text-sm">{article.title}</p>
                             {article.excerpt && (
@@ -164,7 +164,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
                 <ul className="divide-y divide-slate-100">
                   {topCategories.map((cat) => (
                     <li key={cat}>
-                      <Link href={`/category/${categorySlug(cat)}`} className="flex items-center justify-between px-4 py-2.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-[#dc2626] transition-colors group">
+                      <Link href={`/${categorySlug(cat)}`} className="flex items-center justify-between px-4 py-2.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-[#dc2626] transition-colors group">
                         <span className="leading-snug">{cat}</span>
                         <span className="ml-2 shrink-0 text-slate-300 group-hover:text-[#fca5a5] font-medium">{byCategory[cat].length}</span>
                       </Link>

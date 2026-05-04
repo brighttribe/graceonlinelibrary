@@ -70,7 +70,7 @@ const TOPICS: Bucket[] = [
   },
   {
     label: 'Biographies',
-    href: '/category/biographies',
+    href: '/biographies',
   },
 ]
 
@@ -114,7 +114,7 @@ export default function TopicsPage() {
                     return (
                       <Link
                         key={item}
-                        href={`/category/${categorySlug(item)}`}
+                        href={`/${categorySlug(item)}`}
                         className="block text-sm text-[#444] hover:text-[#dc2626] py-1 transition-colors"
                       >
                         {item}
@@ -124,7 +124,7 @@ export default function TopicsPage() {
                   return (
                     <div key={item.label}>
                       <Link
-                        href={`/category/${categorySlug(item.label)}`}
+                        href={`/${categorySlug(item.label)}`}
                         className="block text-sm font-semibold text-[#222] hover:text-[#dc2626] py-1 transition-colors"
                       >
                         {item.label}
@@ -132,7 +132,7 @@ export default function TopicsPage() {
                       {item.children.map((child) => (
                         <Link
                           key={child}
-                          href={`/category/${categorySlug(child)}`}
+                          href={`/${categorySlug(child)}`}
                           className="block text-sm text-[#666] hover:text-[#dc2626] py-1 pl-4 transition-colors"
                         >
                           {child}

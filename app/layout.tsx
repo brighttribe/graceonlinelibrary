@@ -77,11 +77,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <div className="flex flex-col gap-2">
                     <Link href="/articles" className="hover:text-white transition-colors">All Articles</Link>
                     <Link href="/authors" className="hover:text-white transition-colors">Authors</Link>
-                    <Link href="/category/reformed-theology" className="hover:text-white transition-colors">Reformed Theology</Link>
-                    <Link href="/category/doctrine-theology" className="hover:text-white transition-colors">Doctrine & Theology</Link>
-                    <Link href="/category/salvation" className="hover:text-white transition-colors">Salvation</Link>
-                    <Link href="/category/eschatology" className="hover:text-white transition-colors">Eschatology</Link>
-                    <Link href="/category/biographies" className="hover:text-white transition-colors">Biographies</Link>
+                    <Link href="/reformed-theology" className="hover:text-white transition-colors">Reformed Theology</Link>
+                    <Link href="/doctrine-theology" className="hover:text-white transition-colors">Doctrine & Theology</Link>
+                    <Link href="/salvation" className="hover:text-white transition-colors">Salvation</Link>
+                    <Link href="/eschatology" className="hover:text-white transition-colors">Eschatology</Link>
+                    <Link href="/biographies" className="hover:text-white transition-colors">Biographies</Link>
                   </div>
                 </div>
                 <div>

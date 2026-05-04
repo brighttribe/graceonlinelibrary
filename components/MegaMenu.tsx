@@ -156,7 +156,7 @@ export default function MegaMenu() {
                 return (
                   <Link
                     key={section.slug}
-                    href={`/category/${section.slug}`}
+                    href={`/${section.slug}`}
                     className="group flex items-start gap-3 rounded-xl p-4 hover:bg-slate-50 transition-colors"
                   >
                     <span className="text-[#dc2626] group-hover:text-[#fca5a5] transition-colors mt-0.5 shrink-0">

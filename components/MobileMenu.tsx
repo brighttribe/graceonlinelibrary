@@ -67,7 +67,7 @@ const BUCKETS = [
   {
     label: 'Biographies',
     categories: [],
-    href: '/category/biographies',
+    href: '/biographies',
   },
 ]
 
@@ -146,7 +146,7 @@ export default function MobileMenu() {
                     {bucket.categories.map((cat) => (
                       <Link
                         key={cat}
-                        href={`/category/${categorySlug(cat)}`}
+                        href={`/${categorySlug(cat)}`}
                         className="text-sm text-white/50 hover:text-white py-1.5 transition-colors"
                       >
                         {cat}

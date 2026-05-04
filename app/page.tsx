@@ -63,7 +63,7 @@ export default async function HomePage() {
             {FEATURED_CATEGORIES.map((cat) => (
               <Link
                 key={cat.slug}
-                href={`/category/${cat.slug}`}
+                href={`/${cat.slug}`}
                 className="bg-white border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-medium text-[#111111] hover:bg-[#dc2626] hover:text-white hover:border-[#dc2626] transition-all shadow-sm text-center"
               >
                 {cat.name}
@@ -89,7 +89,7 @@ export default async function HomePage() {
             {articles.map((article) => (
               <Link
                 key={article.slug}
-                href={`/articles/${article.slug}`}
+                href={`/${article.slug}`}
                 className="bg-white border border-slate-200 rounded-2xl p-5 hover:shadow-md hover:-translate-y-0.5 transition-all group"
               >
                 {article.category && (

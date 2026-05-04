@@ -39,7 +39,7 @@ export default function ArticleSearch({ large = false }: { large?: boolean }) {
   }, [])
 
   function select(slug: string) {
-    router.push(`/articles/${slug}`)
+    router.push(`/${slug}`)
     setOpen(false)
     setQuery('')
   }

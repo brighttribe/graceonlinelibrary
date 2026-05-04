@@ -44,7 +44,7 @@ export default async function ArticlesPage() {
           <div key={cat}>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold text-[#111111]" style={{ fontFamily: "Georgia, serif" }}>{cat}</h2>
-              <Link href={`/category/${slugify(cat)}`} className="text-xs text-[#dc2626] font-medium hover:underline">
+              <Link href={`/${slugify(cat)}`} className="text-xs text-[#dc2626] font-medium hover:underline">
                 View all →
               </Link>
             </div>
@@ -52,7 +52,7 @@ export default async function ArticlesPage() {
               <ul className="divide-y divide-slate-100">
                 {byCategory[cat].map((article) => (
                   <li key={article.slug}>
-                    <Link href={`/articles/${article.slug}`} className="flex items-baseline justify-between px-5 py-3.5 hover:bg-red-50/50 transition-colors group">
+                    <Link href={`/${article.slug}`} className="flex items-baseline justify-between px-5 py-3.5 hover:bg-red-50/50 transition-colors group">
                       <span className="font-medium text-[#111111] group-hover:text-[#dc2626] transition-colors text-sm leading-snug pr-4">
                         {article.title}
                       </span>
