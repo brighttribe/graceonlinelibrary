@@ -64,7 +64,7 @@ export default async function AuthorBio({ authorName }: { authorName: string }) 
         </div>
       )}
 
-      {author.slug && (
+      {author.slug && (author.bio_long || (author.article_count ?? 0) > 1) && (
         <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
           {author.bio_long && (
             <Link
@@ -74,12 +74,14 @@ export default async function AuthorBio({ authorName }: { authorName: string }) 
               Read full bio &rarr;
             </Link>
           )}
-          <Link
-            href={`/author/${author.slug}`}
-            className="text-xs font-semibold text-[#7c3aed] hover:underline"
-          >
-            All articles by {author.name} &rarr;
-          </Link>
+          {(author.article_count ?? 0) > 1 && (
+            <Link
+              href={`/author/${author.slug}`}
+              className="text-xs font-semibold text-[#7c3aed] hover:underline"
+            >
+              All articles by {author.name} &rarr;
+            </Link>
+          )}
         </div>
       )}
     </div>
