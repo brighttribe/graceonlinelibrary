@@ -141,10 +141,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
                 <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">
                   <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">In this Series</p>
-                  <p className="text-sm font-semibold text-[#111] mt-0.5 leading-snug">{article.series_name ?? article.series_slug}</p>
+                  <p className="text-sm font-semibold text-[#111] mt-0.5 leading-snug">{(article.series_name ?? article.series_slug ?? '').replace(/[\s\-–—]+$/, '')}</p>
                 </div>
                 <ul className="divide-y divide-slate-100">
-                  {seriesData!.map((part, i) => (
+                  {seriesData!.filter(p => p.title && p.slug).map((part, i) => (
                     <li key={part.slug}>
                       <Link
                         href={`/articles/${part.slug}`}
