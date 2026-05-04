@@ -197,7 +197,9 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                     <li key={a.slug}>
                       <Link href={`/articles/${a.slug}`} className="block px-4 py-2.5 hover:bg-[#faf8ff] transition-colors group">
                         <span className="text-xs text-slate-600 group-hover:text-[#7c3aed] leading-snug block">{a.title}</span>
-                        {a.author && <span className="text-[11px] text-slate-400 mt-0.5 block">{a.author}</span>}
+                        {a.author && moreCatData.filter(x => x.title === a.title).length > 1 && (
+                          <span className="text-[11px] text-slate-400 mt-0.5 block">{a.author}</span>
+                        )}
                       </Link>
                     </li>
                   ))}
