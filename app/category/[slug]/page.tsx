@@ -181,7 +181,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
                 <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
                   <ul className="divide-y divide-slate-100">
                     {articles.map((article, i) => (
-                      <li key={article.slug} className={i % 2 === 1 ? 'bg-slate-50/60' : ''}>
+                      <li key={article.slug} className={i % 2 === 1 ? 'bg-slate-100' : ''}>
                         <Link href={`/articles/${article.slug}`} className="block px-6 py-3.5 hover:bg-[#faf8ff] transition-colors group">
                           <p className="font-semibold text-[#111111] group-hover:text-[#7c3aed] transition-colors leading-snug text-sm">
                             {article.title}
