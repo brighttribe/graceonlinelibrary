@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { createSupabaseClient } from '@/lib/supabase'
 import type { ArticlePreview } from '@/lib/types'
-import { CATEGORY_SLUGS, CATEGORY_CHILDREN } from '@/lib/categories'
+import { CATEGORY_SLUGS, CATEGORY_CHILDREN, CATEGORY_PARENT } from '@/lib/categories'
 
 function getCategoryName(slug: string): string | null {
   return CATEGORY_SLUGS[slug] ?? null
@@ -32,14 +32,20 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
 
   const supabase = createSupabaseClient()
   const childSlugs = CATEGORY_CHILDREN[slug] ?? []
+  const parentSlug = CATEGORY_PARENT[slug] ?? null
+  const parentName = parentSlug ? getCategoryName(parentSlug) : null
+
+  // Sibling categories (other children of the same parent)
+  const siblingsSlugs = parentSlug ? (CATEGORY_CHILDREN[parentSlug] ?? []).filter(s => s !== slug) : []
 
   // Fetch articles and sub-category counts in parallel
   const childNames = childSlugs.map((s) => CATEGORY_SLUGS[s]).filter(Boolean)
+  const siblingNames = siblingsSlugs.map((s) => CATEGORY_SLUGS[s]).filter(Boolean)
 
-  const [{ data: articleData }, { data: allCatData }] = await Promise.all([
+  const [{ data: articleData }, { data: allCatData }, { data: siblingCountData }] = await Promise.all([
     supabase
       .from('articles')
-      .select('id, title, slug, excerpt, category, author, published_at, featured')
+      .select('id, title, slug, category, author, published_at, featured')
       .eq('status', 'published')
       .or(`category.eq.${categoryName},tags.cs.{${categoryName}}`)
       .order('title'),
@@ -50,11 +56,18 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
           .eq('status', 'published')
           .or(childNames.map(n => `category.eq.${n},tags.cs.{${n}}`).join(','))
       : Promise.resolve({ data: [] }),
+    siblingNames.length > 0
+      ? supabase
+          .from('articles')
+          .select('category, tags')
+          .eq('status', 'published')
+          .or(siblingNames.map(n => `category.eq.${n},tags.cs.{${n}}`).join(','))
+      : Promise.resolve({ data: [] }),
   ])
 
   const articles = (articleData ?? []) as ArticlePreview[]
 
-  // Count articles per child category (an article may match via category or tags)
+  // Count articles per child category
   const countMap: Record<string, number> = {}
   for (const row of allCatData ?? []) {
     const matched = new Set<string>()
@@ -67,11 +80,33 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
     }
   }
 
+  // Count articles per sibling category
+  const siblingCountMap: Record<string, number> = {}
+  for (const row of siblingCountData ?? []) {
+    const matched = new Set<string>()
+    if (siblingNames.includes(row.category)) matched.add(row.category)
+    for (const tag of row.tags ?? []) {
+      if (siblingNames.includes(tag)) matched.add(tag)
+    }
+    for (const name of matched) {
+      siblingCountMap[name] = (siblingCountMap[name] ?? 0) + 1
+    }
+  }
+
   const subCats: SubCat[] = childSlugs
     .map((s) => ({ slug: s, name: CATEGORY_SLUGS[s] ?? s, count: countMap[CATEGORY_SLUGS[s]] ?? 0 }))
     .filter((s) => s.count > 0)
 
+  const siblings: SubCat[] = siblingsSlugs
+    .map((s) => ({ slug: s, name: CATEGORY_SLUGS[s] ?? s, count: siblingCountMap[CATEGORY_SLUGS[s]] ?? 0 }))
+    .filter((s) => s.count > 0)
+
   const totalCount = articles.length + Object.values(countMap).reduce((a, b) => a + b, 0)
+
+  // Breadcrumb: build parent chain
+  const breadcrumb = parentSlug && parentName
+    ? [{ href: `/category/${parentSlug}`, label: parentName }]
+    : []
 
   return (
     <main>
@@ -84,10 +119,16 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
           <circle cx="340" cy="140" r="90"  stroke="rgba(139,92,246,0.04)" strokeWidth="30" />
         </svg>
         <div className="relative max-w-5xl mx-auto px-4 pt-6 pb-10">
-          <nav className="mb-5 text-sm text-white/40 flex items-center gap-1.5">
+          <nav className="mb-5 text-sm text-white/40 flex items-center gap-1.5 flex-wrap">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
             <span>›</span>
             <Link href="/topics" className="hover:text-white transition-colors">Topics</Link>
+            {breadcrumb.map((crumb) => (
+              <>
+                <span key={crumb.href + '-sep'}>›</span>
+                <Link key={crumb.href} href={crumb.href} className="hover:text-white transition-colors">{crumb.label}</Link>
+              </>
+            ))}
             <span>›</span>
             <span className="text-white/70">{categoryName}</span>
           </nav>
@@ -98,65 +139,101 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 py-10 space-y-10">
-        {/* Sub-category navigation */}
-        {subCats.length > 0 && (
-          <div>
-            <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">Browse by Sub-topic</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {subCats.map((sub) => (
-                <Link
-                  key={sub.slug}
-                  href={`/category/${sub.slug}`}
-                  className="group flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 hover:border-[#7c3aed] hover:bg-[#faf8ff] transition-all shadow-sm"
-                >
-                  <span className="text-sm font-medium text-[#111111] group-hover:text-[#7c3aed] transition-colors leading-snug">
-                    {sub.name}
-                  </span>
-                  <span className="ml-3 shrink-0 text-xs font-semibold text-white bg-[#7c3aed] group-hover:bg-[#6d28d9] rounded-full px-2 py-0.5 transition-colors">
-                    {sub.count}
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
+      <div className="max-w-5xl mx-auto px-4 py-10">
+        <div className="flex gap-10 items-start">
 
-        {/* Articles in this category */}
-        {articles.length > 0 && (
-          <div>
+          {/* Main content */}
+          <div className="flex-1 min-w-0 space-y-10">
+
+            {/* Sub-category navigation */}
             {subCats.length > 0 && (
-              <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">
-                Articles in {categoryName}
-              </h2>
-            )}
-            <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-              <ul className="divide-y divide-slate-100">
-                {articles.map((article) => (
-                  <li key={article.slug}>
-                    <Link href={`/articles/${article.slug}`} className="flex items-start justify-between px-6 py-4 hover:bg-[#faf8ff] transition-colors group">
-                      <div className="flex-1 pr-4">
-                        <h2 className="font-semibold text-[#111111] group-hover:text-[#7c3aed] transition-colors leading-snug text-sm">
-                          {article.title}
-                        </h2>
-                        {article.excerpt && (
-                          <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">{article.excerpt}</p>
-                        )}
-                      </div>
-                      {article.author && (
-                        <span className="text-xs text-slate-400 shrink-0 mt-0.5">{article.author}</span>
-                      )}
+              <div>
+                <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">Browse by Sub-topic</h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {subCats.map((sub) => (
+                    <Link
+                      key={sub.slug}
+                      href={`/category/${sub.slug}`}
+                      className="group flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 hover:border-[#7c3aed] hover:bg-[#faf8ff] transition-all shadow-sm"
+                    >
+                      <span className="text-sm font-medium text-[#111111] group-hover:text-[#7c3aed] transition-colors leading-snug">
+                        {sub.name}
+                      </span>
+                      <span className="ml-3 shrink-0 text-xs font-semibold text-white bg-[#7c3aed] group-hover:bg-[#6d28d9] rounded-full px-2 py-0.5 transition-colors">
+                        {sub.count}
+                      </span>
                     </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
+                  ))}
+                </div>
+              </div>
+            )}
 
-        {articles.length === 0 && subCats.length === 0 && (
-          <p className="text-slate-500 text-sm">No articles found in this category.</p>
-        )}
+            {/* Articles in this category */}
+            {articles.length > 0 && (
+              <div>
+                {subCats.length > 0 && (
+                  <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">
+                    Articles in {categoryName}
+                  </h2>
+                )}
+                <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                  <ul className="divide-y divide-slate-100">
+                    {articles.map((article) => (
+                      <li key={article.slug}>
+                        <Link href={`/articles/${article.slug}`} className="flex items-start px-6 py-3.5 hover:bg-[#faf8ff] transition-colors group">
+                          <div className="flex-1 min-w-0">
+                            <p className="font-semibold text-[#111111] group-hover:text-[#7c3aed] transition-colors leading-snug text-sm">
+                              {article.title}
+                            </p>
+                            {article.author && (
+                              <p className="text-xs text-slate-400 mt-0.5">{article.author}</p>
+                            )}
+                          </div>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
+
+            {articles.length === 0 && subCats.length === 0 && (
+              <p className="text-slate-500 text-sm">No articles found in this category.</p>
+            )}
+          </div>
+
+          {/* Sidebar — sibling categories (only on child pages) */}
+          {siblings.length > 0 && (
+            <aside className="w-56 shrink-0 hidden lg:block">
+              <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
+                <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">
+                  {parentName && parentSlug && (
+                    <Link href={`/category/${parentSlug}`} className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest hover:text-[#7c3aed] transition-colors">
+                      {parentName}
+                    </Link>
+                  )}
+                </div>
+                <ul className="divide-y divide-slate-100">
+                  <li>
+                    <span className="flex items-center justify-between px-4 py-2.5 text-xs font-semibold text-[#7c3aed] bg-[#f5f3ff]">
+                      <span>{categoryName}</span>
+                      <span className="text-[#a78bfa]">{articles.length}</span>
+                    </span>
+                  </li>
+                  {siblings.map((s) => (
+                    <li key={s.slug}>
+                      <Link href={`/category/${s.slug}`} className="flex items-center justify-between px-4 py-2.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-[#7c3aed] transition-colors group">
+                        <span className="leading-snug">{s.name}</span>
+                        <span className="ml-2 shrink-0 text-slate-300 group-hover:text-[#a78bfa]">{s.count}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </aside>
+          )}
+
+        </div>
       </div>
     </main>
   )

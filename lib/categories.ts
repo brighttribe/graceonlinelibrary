@@ -97,6 +97,9 @@ export function categorySlug(name: string): string {
   return CATEGORY_NAME_TO_SLUG[name] ?? name.toLowerCase().replace(/[^\w\s-]/g, '').replace(/[\s_]+/g, '-').replace(/^-+|-+$/g, '')
 }
 
+// Child slug → parent slug
+export const CATEGORY_PARENT: Record<string, string> = {}
+
 // Parent slug → ordered child slugs, sourced from gol-wp.xml parent/child relationships
 export const CATEGORY_CHILDREN: Record<string, string[]> = {
   'reformed-theology':      ['five-points-of-calvinism', 'arminianism', 'covenant-theology', 'free-will', 'decrees-of-god', 'foreknowledge-of-god', 'augustine-pelagius', 'regeneration', 'reprobation'],
@@ -111,4 +114,11 @@ export const CATEGORY_CHILDREN: Record<string, string[]> = {
   'church-history':         ['puritans', 'accounts-of-revival', 'creeds-confessions', 'baptists', 'sermons-tracts', 'false-teachers'],
   'eschatology':            ['dispensationalism', 'premillennialism', 'amillennialsm', 'postmillennialism', 'revelation-20', 'eternal-punishment', 'partial-preterism', 'the-2nd-coming'],
   'home-family':            ['family-worship', 'marriage', 'christian-parenting'],
+}
+
+// Populate CATEGORY_PARENT from CATEGORY_CHILDREN
+for (const [parent, children] of Object.entries(CATEGORY_CHILDREN)) {
+  for (const child of children) {
+    CATEGORY_PARENT[child] = parent
+  }
 }
