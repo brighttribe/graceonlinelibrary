@@ -10,8 +10,11 @@ type Author = {
   article_count: number | null
 }
 
+const GROUP_WORDS = /\b(assembly|synod|committee|council|board|conference|church|society|association|classis|presbytery|convention|institute|foundation|college|seminary|session|parliament|delegation|body)\b/i
+
 export default async function AuthorBio({ authorName }: { authorName: string }) {
   if (/^unknown/i.test(authorName.trim())) return null
+  if (GROUP_WORDS.test(authorName)) return null
 
   const supabase = createSupabaseClient()
 
