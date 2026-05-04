@@ -14,12 +14,21 @@ const lastName = (name: string) => name.trim().split(/\s+/).pop() ?? name
 export default async function AuthorsPage() {
   const supabase = createSupabaseClient()
 
-  const { data } = await supabase
-    .from('authors')
-    .select('name')
-    .not('slug', 'is', null)
-    .gt('article_count', 0)
-    .not('name', 'ilike', 'unknown%')
+  const [{ data }, { data: popular }] = await Promise.all([
+    supabase
+      .from('authors')
+      .select('name')
+      .not('slug', 'is', null)
+      .gt('article_count', 0)
+      .not('name', 'ilike', 'unknown%'),
+    supabase
+      .from('authors')
+      .select('name, slug, article_count')
+      .not('slug', 'is', null)
+      .not('name', 'ilike', 'unknown%')
+      .order('article_count', { ascending: false })
+      .limit(12),
+  ])
 
   const activeLetters = new Set(
     (data ?? []).map((a) => lastName(a.name)[0].toUpperCase())
@@ -54,7 +63,9 @@ export default async function AuthorsPage() {
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 py-12">
+      <div className="max-w-5xl mx-auto px-4 py-12 space-y-10">
+
+        {/* A–Z nav */}
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 relative overflow-hidden">
           <div className="absolute inset-x-0 top-0 h-1 rounded-t-2xl" style={{ background: 'linear-gradient(90deg, #3b1a8f, #7c3aed, #a78bfa)' }} />
           <div className="flex flex-wrap justify-center gap-2 pt-1">
@@ -79,6 +90,26 @@ export default async function AuthorsPage() {
             })}
           </div>
         </div>
+
+        {/* Popular authors */}
+        {popular && popular.length > 0 && (
+          <div>
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-4">Popular Authors</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-1">
+              {popular.map((a) => (
+                <Link
+                  key={a.slug}
+                  href={`/author/${a.slug}`}
+                  className="flex items-center justify-between py-2 border-b border-slate-100 text-sm text-[#111111] hover:text-[#7c3aed] transition-colors group"
+                >
+                  <span>{a.name}</span>
+                  <span className="text-xs text-slate-400 group-hover:text-[#a78bfa]">{a.article_count}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
       </div>
     </main>
   )

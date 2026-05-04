@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import ArticleSearch from '@/components/ArticleSearch'
 import MobileMenu from '@/components/MobileMenu'
+import MegaMenu from '@/components/MegaMenu'
 import BackToTop from '@/components/BackToTop'
 import './globals.css'
 
@@ -35,16 +36,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Link>
 
             <div className="flex-1" />
+            <div className="hidden md:flex">
+              <MegaMenu />
+            </div>
+            <div className="flex-1" />
 
-            <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-white/70 shrink-0">
-              <Link href="/articles" className="hover:text-white transition-colors">All Articles</Link>
-              <Link href="/authors" className="hover:text-white transition-colors">Authors</Link>
-              <Link href="/category/reformed-theology" className="hover:text-white transition-colors">Reformed Theology</Link>
-              <Link href="/category/puritans" className="hover:text-white transition-colors">Puritans</Link>
-              <Link href="/about" className="hover:text-white transition-colors">About</Link>
-            </nav>
-
-            <div className="hidden md:block w-52 shrink-0">
+            <div className="hidden md:block w-44 shrink-0">
               <ArticleSearch />
             </div>
 
@@ -76,14 +73,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <Link href="/articles" className="hover:text-white transition-colors">All Articles</Link>
                     <Link href="/authors" className="hover:text-white transition-colors">Authors</Link>
                     <Link href="/category/reformed-theology" className="hover:text-white transition-colors">Reformed Theology</Link>
-                    <Link href="/category/puritans" className="hover:text-white transition-colors">Puritans</Link>
-                    <Link href="/category/church-history" className="hover:text-white transition-colors">Church History</Link>
-                    <Link href="/category/five-points-of-calvinism" className="hover:text-white transition-colors">Five Points of Calvinism</Link>
+                    <Link href="/category/doctrine-theology" className="hover:text-white transition-colors">Doctrine & Theology</Link>
+                    <Link href="/category/salvation" className="hover:text-white transition-colors">Salvation</Link>
+                    <Link href="/category/eschatology" className="hover:text-white transition-colors">Eschatology</Link>
+                    <Link href="/category/biographies" className="hover:text-white transition-colors">Biographies</Link>
                   </div>
                 </div>
                 <div>
                   <p className="text-white/80 font-semibold mb-3 uppercase text-xs tracking-wider">Site</p>
                   <div className="flex flex-col gap-2">
+                    <Link href="/topics" className="hover:text-white transition-colors">All Topics</Link>
+                    <Link href="/authors" className="hover:text-white transition-colors">Authors</Link>
                     <Link href="/about" className="hover:text-white transition-colors">About</Link>
                     <a href="https://biblespeak.org" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">BibleSpeak.org</a>
                   </div>

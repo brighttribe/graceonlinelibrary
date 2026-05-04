@@ -63,19 +63,13 @@ body {
 
 .prose strong { color: #111111; }
 
-/* ── Lead paragraph + drop cap ─────────────────────────────── */
-.prose > p:first-of-type {
-  font-size: 1.175rem;
-  line-height: 1.85;
-  color: #111111;
-}
-
+/* ── Drop cap ───────────────────────────────────────────────── */
 .prose > p:first-of-type:not(:has(> strong:only-child)):not(:has(> em:only-child))::first-letter {
   float: left;
   font-size: 4.25rem;
   line-height: 0.82;
   font-family: Georgia, 'Times New Roman', serif;
-  font-weight: 700;
+  font-weight: 400;
   color: #1a1a1a;
   margin-right: 0.1em;
   margin-top: 0.08em;

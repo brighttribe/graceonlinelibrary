@@ -8,11 +8,12 @@ export function formatContent(content: string): string {
   // Split on double newlines, wrap each block in <p> if not already a block element
   const BLOCK = /^<(h[1-6]|ul|ol|li|blockquote|pre|div|table|figure|img|a\s)/i
 
-  // Ensure text immediately after a closing block tag gets its own paragraph
-  const normalized = content.replace(
-    /<\/(blockquote|ul|ol|div|table)>\n(?=[^\n<])/gi,
-    '</$1>\n\n'
-  )
+  // Normalize single newlines around block-level tags so the splitter sees them as separate blocks
+  const normalized = content
+    // single NL before an opening block tag → double NL
+    .replace(/([^\n])\n(<(?:h[1-6]|blockquote|ul|ol|div|table)[\s>])/gi, '$1\n\n$2')
+    // single NL after a closing block tag → double NL
+    .replace(/(<\/(?:h[1-6]|blockquote|ul|ol|div|table)>)\n(?!\n)/gi, '$1\n\n')
 
   return normalized
     .split(/\n{2,}/)
