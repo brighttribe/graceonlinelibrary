@@ -179,24 +179,20 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
                   </h2>
                 )}
                 <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-                  <div className="flex items-center px-6 py-2.5 border-b border-slate-100 bg-slate-50">
-                    <span className="flex-1 text-[11px] font-semibold text-slate-400 uppercase tracking-widest">Title</span>
-                    <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest w-32 text-right">Author</span>
-                    <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest w-16 text-right">Read</span>
-                  </div>
                   <ul className="divide-y divide-slate-100">
-                    {articles.map((article) => (
-                      <li key={article.slug}>
-                        <Link href={`/articles/${article.slug}`} className="flex items-center px-6 py-3.5 hover:bg-[#faf8ff] transition-colors group">
-                          <p className="flex-1 font-semibold text-[#111111] group-hover:text-[#7c3aed] transition-colors leading-snug text-sm pr-4">
+                    {articles.map((article, i) => (
+                      <li key={article.slug} className={i % 2 === 1 ? 'bg-slate-50/60' : ''}>
+                        <Link href={`/articles/${article.slug}`} className="block px-6 py-3.5 hover:bg-[#faf8ff] transition-colors group">
+                          <p className="font-semibold text-[#111111] group-hover:text-[#7c3aed] transition-colors leading-snug text-sm">
                             {article.title}
                           </p>
-                          <span className="text-xs text-slate-400 w-32 text-right shrink-0 leading-snug">
-                            {article.author ?? ''}
-                          </span>
-                          <span className="text-xs text-slate-400 w-16 text-right shrink-0">
-                            {readingTime(article.content ?? '')} min
-                          </span>
+                          {(article.author || article.content) && (
+                            <p className="text-xs text-slate-400 mt-0.5">
+                              {article.author}
+                              {article.author && <span className="mx-1.5 text-[#7c3aed]">·</span>}
+                              {readingTime(article.content ?? '')} min
+                            </p>
+                          )}
                         </Link>
                       </li>
                     ))}
@@ -225,14 +221,14 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
                   <li>
                     <span className="flex items-center justify-between px-4 py-2.5 text-xs font-semibold text-[#7c3aed] bg-[#f5f3ff]">
                       <span>{categoryName}</span>
-                      <span className="text-[#a78bfa]">{articles.length}</span>
+                      <span className="text-[#7c3aed]">{articles.length}</span>
                     </span>
                   </li>
                   {siblings.map((s) => (
                     <li key={s.slug}>
                       <Link href={`/category/${s.slug}`} className="flex items-center justify-between px-4 py-2.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-[#7c3aed] transition-colors group">
                         <span className="leading-snug">{s.name}</span>
-                        <span className="ml-2 shrink-0 text-slate-300 group-hover:text-[#a78bfa]">{s.count}</span>
+                        <span className="ml-2 shrink-0 text-slate-500 group-hover:text-[#a78bfa]">{s.count}</span>
                       </Link>
                     </li>
                   ))}
