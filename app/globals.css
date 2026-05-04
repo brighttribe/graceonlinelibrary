@@ -1,0 +1,132 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+body {
+  background-color: #ffffff;
+  color: #1a1a1a;
+}
+
+/* ── Prose (article body) ───────────────────────────────── */
+.prose {
+  --tw-prose-body:          #1a1a1a;
+  --tw-prose-headings:      #111111;
+  --tw-prose-links:         #7c3aed;
+  --tw-prose-bold:          #111111;
+  --tw-prose-quotes:        #444;
+  --tw-prose-quote-borders: #7c3aed;
+  --tw-prose-hr:            #e0e0e0;
+  --tw-prose-bullets:       #7c3aed;
+  --tw-prose-counters:      #7c3aed;
+}
+
+.prose p,
+.prose li {
+  font-family: Georgia, 'Times New Roman', serif;
+  line-height: 1.9;
+  font-size: 1.0625rem;
+}
+
+.prose h2,
+.prose h3,
+.prose h4 {
+  font-family: Georgia, 'Times New Roman', serif;
+  color: #111111;
+  margin-top: 2.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose h2 { font-size: 1.4rem; }
+.prose h3 { font-size: 1.2rem; }
+
+.prose a {
+  color: #7c3aed;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose a:hover { color: #6d28d9; }
+
+.prose blockquote {
+  border-left: 4px solid #7c3aed;
+  background: #f5f3ff;
+  padding: 1rem 1.25rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 1.0625rem;
+  line-height: 1.9;
+  color: #444;
+  margin: 1.5rem 0;
+}
+
+.prose blockquote p { margin: 0; }
+
+.prose strong { color: #111111; }
+
+/* ── Lead paragraph + drop cap ─────────────────────────────── */
+.prose > p:first-of-type {
+  font-size: 1.175rem;
+  line-height: 1.85;
+  color: #111111;
+}
+
+.prose > p:first-of-type:not(:has(> strong:only-child)):not(:has(> em:only-child))::first-letter {
+  float: left;
+  font-size: 4.25rem;
+  line-height: 0.82;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-right: 0.1em;
+  margin-top: 0.08em;
+}
+
+.prose > p:first-of-type .lead-words {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.prose img {
+  border-radius: 0.5rem;
+  margin: 1.5rem auto;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  margin: 1.75rem 0;
+}
+
+.prose table th {
+  background: #1e0a4e;
+  color: #ffffff;
+  font-family: inherit;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.6rem 0.875rem;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.prose table td {
+  padding: 0.6rem 0.875rem;
+  border-bottom: 1px solid #e8e4f0;
+  color: #1a1a1a;
+  vertical-align: top;
+}
+
+.prose table tr:nth-child(even) td {
+  background: #f9f7ff;
+}
+
+.prose table tr:last-child td {
+  border-bottom: none;
+}
+
+.prose table {
+  border: 1px solid #e0d9f5;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
