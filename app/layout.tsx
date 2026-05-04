@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
 import Image from 'next/image'
-import Script from 'next/script'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import ArticleSearch from '@/components/ArticleSearch'
 import MobileMenu from '@/components/MobileMenu'
 import MegaMenu from '@/components/MegaMenu'
@@ -25,15 +25,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={inter.className}>
-      <head>
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-98SRBV5Z4C" strategy="afterInteractive" />
-        <Script id="google-analytics" strategy="afterInteractive">{`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-98SRBV5Z4C');
-        `}</Script>
-      </head>
       <body className="bg-white text-[#1a1a1a] antialiased">
 
         <header className="bg-[#1e0a4e] sticky top-0 z-40 border-b border-white/10">
@@ -108,6 +99,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </footer>
 
       </body>
+      <GoogleAnalytics gaId="G-98SRBV5Z4C" />
     </html>
   )
 }
