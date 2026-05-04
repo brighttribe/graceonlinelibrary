@@ -103,9 +103,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               </>
             )}
           </nav>
-          {article.category && (
-            <p className="text-[#c4b5fd] text-xs font-semibold uppercase tracking-widest mb-3 mt-4">{article.category}</p>
-          )}
           <h1 className="text-3xl sm:text-4xl font-bold leading-tight mb-4 max-w-3xl">{article.title}</h1>
           <p className="text-white/50 text-sm">
             {article.author && (
@@ -136,9 +133,11 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             )}
           </div>
 
-          {/* Sidebar — series nav only (short = sticky works) */}
-          {hasSeries && (
-            <aside className="w-64 shrink-0 hidden lg:block">
+          {/* Sidebar */}
+          <aside className="w-64 shrink-0 hidden lg:block space-y-6">
+
+            {/* Series nav */}
+            {hasSeries && (
               <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
                 <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">
                   <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">In this Series</p>
@@ -162,59 +161,53 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                   ))}
                 </ul>
               </div>
-            </aside>
-          )}
-        </div>
-      </div>
+            )}
 
-      {/* Below-article panels */}
-      <div className="border-t border-slate-100">
-        <div className="max-w-5xl mx-auto px-4 py-10 grid sm:grid-cols-2 gap-10">
-
-          {/* More by Author */}
-          {byAuthorData && byAuthorData.length > 0 && article.author && (
-            <div>
-              <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">More by {article.author}</h2>
-              <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+            {/* More by Author */}
+            {byAuthorData && byAuthorData.length > 0 && article.author && (
+              <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
+                <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">
+                  <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">More by {article.author}</p>
+                </div>
                 <ul className="divide-y divide-slate-100">
                   {byAuthorData.map((a) => (
                     <li key={a.slug}>
-                      <Link href={`/articles/${a.slug}`} className="block px-5 py-3.5 text-sm text-[#111] hover:bg-[#faf8ff] hover:text-[#7c3aed] transition-colors leading-snug font-medium">
+                      <Link href={`/articles/${a.slug}`} className="block px-4 py-2.5 text-xs text-slate-600 hover:bg-[#faf8ff] hover:text-[#7c3aed] transition-colors leading-snug">
                         {a.title}
                       </Link>
                     </li>
                   ))}
                 </ul>
                 {authorRow?.slug && (
-                  <div className="px-5 py-3 border-t border-slate-100">
+                  <div className="px-4 py-2.5 border-t border-slate-100">
                     <Link href={`/author/${authorRow.slug}`} className="text-xs text-[#7c3aed] hover:text-[#6d28d9] font-medium">All articles →</Link>
                   </div>
                 )}
               </div>
-            </div>
-          )}
+            )}
 
-          {/* More in Category */}
-          {moreCatData && moreCatData.length > 0 && article.category && (
-            <div>
-              <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">More in {article.category}</h2>
-              <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+            {/* More in Category */}
+            {moreCatData && moreCatData.length > 0 && article.category && (
+              <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
+                <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">
+                  <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">More in {article.category}</p>
+                </div>
                 <ul className="divide-y divide-slate-100">
                   {moreCatData.map((a) => (
                     <li key={a.slug}>
-                      <Link href={`/articles/${a.slug}`} className="block px-5 py-3.5 text-sm text-[#111] hover:bg-[#faf8ff] hover:text-[#7c3aed] transition-colors leading-snug font-medium">
+                      <Link href={`/articles/${a.slug}`} className="block px-4 py-2.5 text-xs text-slate-600 hover:bg-[#faf8ff] hover:text-[#7c3aed] transition-colors leading-snug">
                         {a.title}
                       </Link>
                     </li>
                   ))}
                 </ul>
-                <div className="px-5 py-3 border-t border-slate-100">
+                <div className="px-4 py-2.5 border-t border-slate-100">
                   <Link href={`/category/${categorySlug(article.category)}`} className="text-xs text-[#7c3aed] hover:text-[#6d28d9] font-medium">All {article.category} articles →</Link>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
+          </aside>
         </div>
       </div>
     </main>
