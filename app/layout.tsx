@@ -71,16 +71,28 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   A curated library of Reformed, Puritan, and confessionally Baptist theological resources — free for the church since 1999.
                 </p>
               </div>
-              <div className="flex gap-16 text-sm">
+              <div className="flex flex-wrap gap-10 text-sm">
                 <div>
-                  <p className="text-white/80 font-semibold mb-3 uppercase text-xs tracking-wider">Browse</p>
+                  <p className="text-white/80 font-semibold mb-3 uppercase text-xs tracking-wider">Reformed</p>
                   <div className="flex flex-col gap-2">
-                    <Link href="/articles" className="hover:text-white transition-colors">All Articles</Link>
-                    <Link href="/authors" className="hover:text-white transition-colors">Authors</Link>
                     <Link href="/reformed-theology" className="hover:text-white transition-colors">Reformed Theology</Link>
-                    <Link href="/doctrine-theology" className="hover:text-white transition-colors">Doctrine & Theology</Link>
+                    <Link href="/doctrine-theology" className="hover:text-white transition-colors">Doctrine &amp; Theology</Link>
                     <Link href="/salvation" className="hover:text-white transition-colors">Salvation</Link>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-white/80 font-semibold mb-3 uppercase text-xs tracking-wider">Life &amp; Ministry</p>
+                  <div className="flex flex-col gap-2">
+                    <Link href="/christian-life" className="hover:text-white transition-colors">Christian Life</Link>
+                    <Link href="/church-ministry" className="hover:text-white transition-colors">Church Ministry</Link>
+                    <Link href="/church-history" className="hover:text-white transition-colors">Church History</Link>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-white/80 font-semibold mb-3 uppercase text-xs tracking-wider">More Topics</p>
+                  <div className="flex flex-col gap-2">
                     <Link href="/eschatology" className="hover:text-white transition-colors">Eschatology</Link>
+                    <Link href="/home-family" className="hover:text-white transition-colors">Home &amp; Family</Link>
                     <Link href="/biographies" className="hover:text-white transition-colors">Biographies</Link>
                   </div>
                 </div>
