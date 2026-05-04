@@ -21,11 +21,13 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://graceonlinelibrary.org'
   const categoryName = getCategoryName(slug)
   if (categoryName) {
     return {
       title: `${categoryName} Articles`,
       description: `Reformed and Puritan articles on ${categoryName} from Grace Online Library.`,
+      alternates: { canonical: `${siteUrl}/${slug}/` },
     }
   }
   const supabase = createSupabaseClient()
@@ -40,6 +42,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title,
     description,
+    alternates: { canonical: `${siteUrl}/${slug}/` },
     openGraph: { title, description, type: 'article' },
     twitter: { card: 'summary', title, description },
   }
@@ -109,8 +112,34 @@ async function CategoryPage({ slug }: { slug: string }) {
     ? [{ href: `/${parentSlug}`, label: parentName }]
     : []
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://graceonlinelibrary.org'
+  const breadcrumbItems: { '@type': string; position: number; name: string; item: string }[] = [
+    { '@type': 'ListItem', position: 1, name: 'Home',   item: `${siteUrl}/` },
+    { '@type': 'ListItem', position: 2, name: 'Topics', item: `${siteUrl}/topics/` },
+  ]
+  if (parentName && parentSlug) {
+    breadcrumbItems.push({ '@type': 'ListItem', position: 3, name: parentName,    item: `${siteUrl}/${parentSlug}/` })
+    breadcrumbItems.push({ '@type': 'ListItem', position: 4, name: categoryName,  item: `${siteUrl}/${slug}/` })
+  } else {
+    breadcrumbItems.push({ '@type': 'ListItem', position: 3, name: categoryName,  item: `${siteUrl}/${slug}/` })
+  }
+  const categorySchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        name: `${categoryName} Articles`,
+        description: `Reformed and Puritan articles on ${categoryName} from Grace Online Library.`,
+        url: `${siteUrl}/${slug}/`,
+        publisher: { '@type': 'Organization', name: 'Grace Online Library', url: siteUrl },
+      },
+      { '@type': 'BreadcrumbList', itemListElement: breadcrumbItems },
+    ],
+  }
+
   return (
     <main>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(categorySchema) }} />
       <div className="relative overflow-hidden border-b border-[#e5e7eb]" style={{ background: '#f5f5f5' }}>
         <div className="relative max-w-5xl mx-auto px-4 pt-6 pb-10">
           <nav className="mb-5 text-sm text-slate-400 flex items-center gap-1.5 flex-wrap">
@@ -253,18 +282,32 @@ async function ArticlePage({ slug }: { slug: string }) {
   const html = prepareContent(article.content || '')
   const hasSeries = seriesData && seriesData.length > 1
 
+  const articleBreadcrumbs: { '@type': string; position: number; name: string; item: string }[] = [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
+  ]
+  if (article.category) {
+    articleBreadcrumbs.push({ '@type': 'ListItem', position: 2, name: article.category, item: `${siteUrl}/${categorySlug(article.category)}/` })
+    articleBreadcrumbs.push({ '@type': 'ListItem', position: 3, name: article.title, item: pageUrl })
+  } else {
+    articleBreadcrumbs.push({ '@type': 'ListItem', position: 2, name: article.title, item: pageUrl })
+  }
+
   const schema = {
     '@context': 'https://schema.org',
-    '@graph': [{
-      '@type': 'Article',
-      headline: article.title,
-      description: article.excerpt || '',
-      url: pageUrl,
-      datePublished: article.published_at,
-      author: article.author ? { '@type': 'Person', name: article.author } : { '@type': 'Organization', name: 'Grace Online Library' },
-      publisher: { '@type': 'Organization', name: 'Grace Online Library', url: siteUrl },
-      mainEntityOfPage: pageUrl,
-    }],
+    '@graph': [
+      {
+        '@type': 'Article',
+        headline: article.title,
+        description: article.excerpt || '',
+        url: pageUrl,
+        datePublished: article.published_at,
+        dateModified: article.updated_at || article.published_at,
+        author: article.author ? { '@type': 'Person', name: article.author } : { '@type': 'Organization', name: 'Grace Online Library' },
+        publisher: { '@type': 'Organization', name: 'Grace Online Library', url: siteUrl },
+        mainEntityOfPage: pageUrl,
+      },
+      { '@type': 'BreadcrumbList', itemListElement: articleBreadcrumbs },
+    ],
   }
 
   return (

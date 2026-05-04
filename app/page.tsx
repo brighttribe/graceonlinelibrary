@@ -24,6 +24,34 @@ const FEATURED_CATEGORIES = [
 ]
 
 export default async function HomePage() {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://graceonlinelibrary.org'
+  const homeSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': `${siteUrl}/#website`,
+        name: 'Grace Online Library',
+        url: `${siteUrl}/`,
+        description: 'A curated library of Reformed, Puritan, and confessionally Baptist theological articles — free for the church since 1999.',
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: { '@type': 'EntryPoint', urlTemplate: `${siteUrl}/articles?q={search_term_string}` },
+          'query-input': 'required name=search_term_string',
+        },
+      },
+      {
+        '@type': 'Organization',
+        '@id': `${siteUrl}/#organization`,
+        name: 'Grace Online Library',
+        url: `${siteUrl}/`,
+        logo: `${siteUrl}/gol-icon-red.png`,
+        foundingDate: '1999',
+        description: 'A curated library of Reformed, Puritan, and confessionally Baptist theological articles — free for the church since 1999.',
+      },
+    ],
+  }
+
   const supabase = createSupabaseClient()
   const { data: recent } = await supabase
     .from('articles')
@@ -36,6 +64,7 @@ export default async function HomePage() {
 
   return (
     <main>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchema) }} />
 
       {/* ── Hero ── */}
       <section

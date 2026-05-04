@@ -31,12 +31,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     .single<{ name: string; bio: string | null; bio_long: string | null }>()
 
   if (!author) return {}
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://graceonlinelibrary.org'
   const description = author.bio_long
     ? author.bio_long.slice(0, 155)
     : author.bio
       ? author.bio.slice(0, 155)
       : `Reformed and Puritan theological articles by ${author.name} at Grace Online Library.`
-  return { title: author.name, description }
+  return {
+    title: author.name,
+    description,
+    alternates: { canonical: `${siteUrl}/author/${slug}/` },
+  }
 }
 
 export default async function AuthorPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -85,8 +90,30 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
 
   const bioContent = author.bio_long || author.bio
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://graceonlinelibrary.org'
+  const authorSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Person',
+        name: author.name,
+        url: `${siteUrl}/author/${author.slug}/`,
+        ...(author.bio || author.bio_long ? { description: (author.bio_long || author.bio)!.slice(0, 300) } : {}),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home',    item: `${siteUrl}/` },
+          { '@type': 'ListItem', position: 2, name: 'Authors', item: `${siteUrl}/authors/` },
+          { '@type': 'ListItem', position: 3, name: author.name, item: `${siteUrl}/author/${author.slug}/` },
+        ],
+      },
+    ],
+  }
+
   return (
     <main>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(authorSchema) }} />
       {/* Hero */}
       <div className="relative overflow-hidden border-b border-[#e5e7eb]" style={{ background: '#f5f5f5' }}>
         <div className="relative max-w-5xl mx-auto px-4 py-12">
