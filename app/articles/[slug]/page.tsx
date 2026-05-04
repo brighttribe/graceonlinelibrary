@@ -164,7 +164,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             )}
 
             {/* More by Author */}
-            {byAuthorData && byAuthorData.length > 0 && article.author && (
+            {byAuthorData && byAuthorData.length > 1 && article.author && (
               <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
                 <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">
                   <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">More by {article.author}</p>
