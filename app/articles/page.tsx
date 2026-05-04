@@ -3,9 +3,13 @@ import Link from 'next/link'
 import { createSupabaseClient } from '@/lib/supabase'
 import type { ArticlePreview } from '@/lib/types'
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://graceonlinelibrary.org'
+
 export const metadata: Metadata = {
   title: 'All Articles',
-  description: 'Browse all 774 Reformed and Puritan theological articles in the Grace Online Library.',
+  description: 'Browse every Reformed and Puritan theological article in the Grace Online Library, organized by topic.',
+  alternates: { canonical: `${siteUrl}/articles/` },
+  openGraph: { url: `${siteUrl}/articles/`, type: 'website' },
 }
 
 export default async function ArticlesPage() {

@@ -2,9 +2,13 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { categorySlug } from '@/lib/categories'
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://graceonlinelibrary.org'
+
 export const metadata: Metadata = {
   title: 'Topics',
   description: 'Browse Reformed and Puritan theological topics — from the Five Points of Calvinism to Eschatology, Church History, Christian Life, and more.',
+  alternates: { canonical: `${siteUrl}/topics/` },
+  openGraph: { url: `${siteUrl}/topics/`, type: 'website' },
 }
 
 type Category = string | { label: string; children: string[] }

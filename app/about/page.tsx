@@ -1,9 +1,13 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://graceonlinelibrary.org'
+
 export const metadata: Metadata = {
   title: 'About Grace Online Library',
   description: 'Grace Online Library has served the Reformed and Puritan theological community since 1999 — free articles, confessions, and resources for pastors, students, and serious Bible readers.',
+  alternates: { canonical: `${siteUrl}/about/` },
+  openGraph: { url: `${siteUrl}/about/`, type: 'website' },
 }
 
 export default function AboutPage() {

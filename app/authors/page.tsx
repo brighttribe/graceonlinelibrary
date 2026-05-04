@@ -2,9 +2,13 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { createSupabaseClient } from '@/lib/supabase'
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://graceonlinelibrary.org'
+
 export const metadata: Metadata = {
   title: 'Authors',
   description: 'Browse Reformed and Puritan theological authors in the Grace Online Library — Calvin, Owen, Spurgeon, Edwards, Warfield, and hundreds more.',
+  alternates: { canonical: `${siteUrl}/authors/` },
+  openGraph: { url: `${siteUrl}/authors/`, type: 'website' },
 }
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')

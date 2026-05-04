@@ -20,6 +20,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://graceonlinelibrary.org'),
   openGraph: { siteName: 'Grace Online Library', type: 'website' },
   icons: { icon: '/gol-icon-red.png' },
+  alternates: {
+    types: {
+      'application/rss+xml': [{ url: '/feed.xml', title: 'Grace Online Library RSS Feed' }],
+    },
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

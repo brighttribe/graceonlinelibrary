@@ -43,8 +43,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title,
     description,
     alternates: { canonical: `${siteUrl}/${slug}/` },
-    openGraph: { title, description, type: 'article' },
-    twitter: { card: 'summary', title, description },
+    openGraph: { title, description, type: 'article', url: `${siteUrl}/${slug}/` },
+    twitter: { card: 'summary_large_image', title, description },
   }
 }
 
@@ -132,6 +132,16 @@ async function CategoryPage({ slug }: { slug: string }) {
         description: `Reformed and Puritan articles on ${categoryName} from Grace Online Library.`,
         url: `${siteUrl}/${slug}/`,
         publisher: { '@type': 'Organization', name: 'Grace Online Library', url: siteUrl },
+      },
+      {
+        '@type': 'ItemList',
+        name: `${categoryName} Articles`,
+        itemListElement: articles.slice(0, 20).map((a, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          url: `${siteUrl}/${a.slug}/`,
+          name: a.title,
+        })),
       },
       { '@type': 'BreadcrumbList', itemListElement: breadcrumbItems },
     ],
@@ -305,6 +315,8 @@ async function ArticlePage({ slug }: { slug: string }) {
         author: article.author ? { '@type': 'Person', name: article.author } : { '@type': 'Organization', name: 'Grace Online Library' },
         publisher: { '@type': 'Organization', name: 'Grace Online Library', url: siteUrl },
         mainEntityOfPage: pageUrl,
+        ...(article.category ? { articleSection: article.category } : {}),
+        ...(article.content ? { wordCount: article.content.replace(/<[^>]+>/g, '').split(/\s+/).filter(Boolean).length } : {}),
       },
       { '@type': 'BreadcrumbList', itemListElement: articleBreadcrumbs },
     ],
