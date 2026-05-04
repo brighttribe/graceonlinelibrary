@@ -39,24 +39,15 @@ export default async function HomePage() {
 
       {/* ── Hero ── */}
       <section
-        className="relative overflow-hidden text-white pt-24 pb-20 px-6"
-        style={{ background: 'radial-gradient(ellipse 140% 120% at 50% 10%, #3b1a8f 0%, #1e0a4e 45%, #0d0520 75%, #050212 100%)' }}
+        className="relative overflow-hidden border-b border-[#e5e7eb] pt-24 pb-20 px-6"
+        style={{ background: '#e8e8e8' }}
       >
-        {/* Grid texture */}
-        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-        {/* Decorative circles */}
-        <svg className="absolute top-0 right-0 w-[480px] h-[480px] pointer-events-none" viewBox="0 0 480 480" fill="none" aria-hidden="true">
-          <circle cx="380" cy="100" r="200" stroke="rgba(139,92,246,0.04)" strokeWidth="60" />
-          <circle cx="420" cy="60"  r="140" stroke="rgba(139,92,246,0.04)" strokeWidth="40" />
-          <circle cx="340" cy="140" r="90"  stroke="rgba(139,92,246,0.04)" strokeWidth="30" />
-        </svg>
-
         <div className="relative max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold mb-5 tracking-tight leading-[1.1]">
+          <h1 className="text-4xl sm:text-5xl font-bold mb-5 tracking-tight leading-[1.1] text-[#1a1a1a]">
             A Curated Library of<br />
-            <span className="text-purple-200">Reformed &amp; Puritan</span> Theology
+            <span className="text-[#d33d26]">Puritan &amp; Reformed</span> Theology
           </h1>
-          <p className="text-lg text-purple-100 max-w-xl mx-auto leading-relaxed">
+          <p className="text-lg text-slate-500 max-w-xl mx-auto leading-relaxed">
             Historic Baptist, Reformed, and Puritan resources for pastors, students, and serious Bible readers.
           </p>
         </div>
@@ -73,14 +64,14 @@ export default async function HomePage() {
               <Link
                 key={cat.slug}
                 href={`/category/${cat.slug}`}
-                className="bg-white border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-medium text-[#111111] hover:bg-[#7c3aed] hover:text-white hover:border-[#7c3aed] transition-all shadow-sm text-center"
+                className="bg-white border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-medium text-[#111111] hover:bg-[#dc2626] hover:text-white hover:border-[#dc2626] transition-all shadow-sm text-center"
               >
                 {cat.name}
               </Link>
             ))}
           </div>
           <div className="text-center mt-6">
-            <Link href="/articles" className="text-sm text-[#7c3aed] font-medium hover:underline">
+            <Link href="/articles" className="text-sm text-[#dc2626] font-medium hover:underline">
               View all articles →
             </Link>
           </div>
@@ -102,9 +93,9 @@ export default async function HomePage() {
                 className="bg-white border border-slate-200 rounded-2xl p-5 hover:shadow-md hover:-translate-y-0.5 transition-all group"
               >
                 {article.category && (
-                  <span className="text-xs font-semibold text-[#7c3aed] uppercase tracking-wider">{article.category}</span>
+                  <span className="text-xs font-semibold text-[#dc2626] uppercase tracking-wider">{article.category}</span>
                 )}
-                <h3 className="mt-1.5 text-base font-semibold text-[#111111] leading-snug group-hover:text-[#7c3aed] transition-colors line-clamp-2">
+                <h3 className="mt-1.5 text-base font-semibold text-[#111111] leading-snug group-hover:text-[#dc2626] transition-colors line-clamp-2">
                   {article.title}
                 </h3>
                 {article.excerpt && (
@@ -123,7 +114,7 @@ export default async function HomePage() {
           <p className="text-slate-500 leading-relaxed mb-6 max-w-xl mx-auto">
             Founded in 1999, Grace Online Library has served pastors, students, and serious Bible readers with curated Reformed and Puritan theological resources — completely free.
           </p>
-          <Link href="/about" className="inline-flex items-center gap-2 bg-[#7c3aed] hover:bg-[#6d28d9] text-white px-6 py-2.5 rounded-xl font-semibold text-sm transition-colors">
+          <Link href="/about" className="inline-flex items-center gap-2 bg-[#dc2626] hover:bg-[#b91c1c] text-white px-6 py-2.5 rounded-xl font-semibold text-sm transition-colors">
             Learn More
           </Link>
         </div>

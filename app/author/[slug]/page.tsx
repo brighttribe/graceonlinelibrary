@@ -88,23 +88,17 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
   return (
     <main>
       {/* Hero */}
-      <div className="relative overflow-hidden text-white" style={{ background: 'radial-gradient(ellipse 140% 120% at 50% 10%, #3b1a8f 0%, #1e0a4e 45%, #0d0520 75%, #050212 100%)' }}>
-        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-        <svg className="absolute top-0 right-0 w-[480px] h-[480px] pointer-events-none" viewBox="0 0 480 480" fill="none" aria-hidden="true">
-          <circle cx="380" cy="100" r="200" stroke="rgba(139,92,246,0.04)" strokeWidth="60" />
-          <circle cx="420" cy="60"  r="140" stroke="rgba(139,92,246,0.04)" strokeWidth="40" />
-          <circle cx="340" cy="140" r="90"  stroke="rgba(139,92,246,0.04)" strokeWidth="30" />
-        </svg>
+      <div className="relative overflow-hidden border-b border-[#e5e7eb]" style={{ background: '#f5f5f5' }}>
         <div className="relative max-w-5xl mx-auto px-4 py-12">
-          <nav className="mb-4 text-sm text-white/40 flex items-center gap-1.5">
-            <Link href="/" className="hover:text-white transition-colors">Home</Link>
+          <nav className="mb-4 text-sm text-slate-400 flex items-center gap-1.5">
+            <Link href="/" className="hover:text-slate-600 transition-colors">Home</Link>
             <span>›</span>
-            <Link href="/authors" className="hover:text-white transition-colors">Authors</Link>
+            <Link href="/authors" className="hover:text-slate-600 transition-colors">Authors</Link>
             <span>›</span>
-            <span className="text-white/70">{author.name}</span>
+            <span className="text-[#dc2626]">{author.name}</span>
           </nav>
-          <h1 className="text-4xl font-bold" style={{ fontFamily: 'Georgia, serif' }}>{author.name}</h1>
-          <p className="mt-3 text-sm text-white/40">
+          <h1 className="text-4xl font-bold text-[#1a1a1a]" style={{ fontFamily: 'Georgia, serif' }}>{author.name}</h1>
+          <p className="mt-3 text-sm text-slate-400">
             {articles.length} {articles.length === 1 ? 'article' : 'articles'} · {categories.length} {categories.length === 1 ? 'topic' : 'topics'}
           </p>
         </div>
@@ -124,10 +118,16 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
               <p className="text-slate-500 text-sm">No published articles found for this author.</p>
             )}
 
+            {categories.length > 0 && (
+              <h2 className="text-xl font-bold text-[#1a1a1a]">
+                Read Articles by {author.name}
+              </h2>
+            )}
+
             {categories.map((cat) => (
               <div key={cat}>
                 <div className="flex items-center justify-between mb-3">
-                  <Link href={`/category/${categorySlug(cat)}`} className="text-xs font-semibold text-slate-400 uppercase tracking-widest hover:text-[#7c3aed] transition-colors">
+                  <Link href={`/category/${categorySlug(cat)}`} className="text-xs font-semibold text-slate-400 uppercase tracking-widest hover:text-[#dc2626] transition-colors">
                     {cat}
                   </Link>
                   <span className="text-xs text-slate-300">{byCategory[cat].length}</span>
@@ -136,9 +136,9 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
                   <ul className="divide-y divide-slate-100">
                     {byCategory[cat].map((article) => (
                       <li key={article.slug}>
-                        <Link href={`/articles/${article.slug}`} className="flex items-start justify-between px-6 py-4 hover:bg-[#faf8ff] transition-colors group">
+                        <Link href={`/articles/${article.slug}`} className="flex items-start justify-between px-6 py-4 hover:bg-[#fff5f5] transition-colors group">
                           <div className="flex-1 pr-4">
-                            <p className="font-semibold text-[#111111] group-hover:text-[#7c3aed] transition-colors leading-snug text-sm">{article.title}</p>
+                            <p className="font-semibold text-[#111111] group-hover:text-[#dc2626] transition-colors leading-snug text-sm">{article.title}</p>
                             {article.excerpt && (
                               <p className="text-xs text-slate-400 mt-1 line-clamp-1 leading-relaxed">{article.excerpt}</p>
                             )}
@@ -164,9 +164,9 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
                 <ul className="divide-y divide-slate-100">
                   {topCategories.map((cat) => (
                     <li key={cat}>
-                      <Link href={`/category/${categorySlug(cat)}`} className="flex items-center justify-between px-4 py-2.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-[#7c3aed] transition-colors group">
+                      <Link href={`/category/${categorySlug(cat)}`} className="flex items-center justify-between px-4 py-2.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-[#dc2626] transition-colors group">
                         <span className="leading-snug">{cat}</span>
-                        <span className="ml-2 shrink-0 text-slate-300 group-hover:text-[#a78bfa] font-medium">{byCategory[cat].length}</span>
+                        <span className="ml-2 shrink-0 text-slate-300 group-hover:text-[#fca5a5] font-medium">{byCategory[cat].length}</span>
                       </Link>
                     </li>
                   ))}
@@ -183,15 +183,15 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
                 <ul className="divide-y divide-slate-100">
                   {relatedAuthors.map((a) => (
                     <li key={a.slug}>
-                      <Link href={`/author/${a.slug}`} className="flex items-center justify-between px-4 py-2.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-[#7c3aed] transition-colors group">
+                      <Link href={`/author/${a.slug}`} className="flex items-center justify-between px-4 py-2.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-[#dc2626] transition-colors group">
                         <span className="leading-snug">{a.name}</span>
-                        <span className="ml-2 shrink-0 text-slate-300 group-hover:text-[#a78bfa]">{a.article_count}</span>
+                        <span className="ml-2 shrink-0 text-slate-300 group-hover:text-[#fca5a5]">{a.article_count}</span>
                       </Link>
                     </li>
                   ))}
                 </ul>
                 <div className="px-4 py-2.5 border-t border-slate-100">
-                  <Link href="/authors" className="text-xs text-[#7c3aed] hover:text-[#6d28d9] font-medium transition-colors">
+                  <Link href="/authors" className="text-xs text-[#dc2626] hover:text-[#b91c1c] font-medium transition-colors">
                     All authors →
                   </Link>
                 </div>

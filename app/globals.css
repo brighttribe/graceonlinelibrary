@@ -10,13 +10,13 @@ body {
 .prose {
   --tw-prose-body:          #1a1a1a;
   --tw-prose-headings:      #111111;
-  --tw-prose-links:         #7c3aed;
+  --tw-prose-links:         #dc2626;
   --tw-prose-bold:          #111111;
   --tw-prose-quotes:        #444;
-  --tw-prose-quote-borders: #7c3aed;
+  --tw-prose-quote-borders: #dc2626;
   --tw-prose-hr:            #e0e0e0;
-  --tw-prose-bullets:       #7c3aed;
-  --tw-prose-counters:      #7c3aed;
+  --tw-prose-bullets:       #dc2626;
+  --tw-prose-counters:      #dc2626;
 }
 
 .prose p,
@@ -39,16 +39,16 @@ body {
 .prose h3 { font-size: 1.2rem; }
 
 .prose a {
-  color: #7c3aed;
+  color: #dc2626;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.prose a:hover { color: #6d28d9; }
+.prose a:hover { color: #b91c1c; }
 
 .prose blockquote {
-  border-left: 4px solid #7c3aed;
-  background: #f5f3ff;
+  border-left: 4px solid #dc2626;
+  background: #fef2f2;
   padding: 1rem 1.25rem;
   border-radius: 0 0.5rem 0.5rem 0;
   font-family: Georgia, 'Times New Roman', serif;
@@ -93,7 +93,7 @@ body {
 }
 
 .prose table th {
-  background: #1e0a4e;
+  background: #111111;
   color: #ffffff;
   font-family: inherit;
   font-weight: 600;

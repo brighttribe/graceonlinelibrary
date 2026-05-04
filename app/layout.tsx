@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description: 'A curated library of Reformed, Puritan, and Baptist theological articles. Serving the church for over 30 years.',
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://graceonlinelibrary.org'),
   openGraph: { siteName: 'Grace Online Library', type: 'website' },
-  icons: { icon: '/gol-purple.png' },
+  icons: { icon: '/gol-icon-red.png' },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -27,11 +27,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={inter.className}>
       <body className="bg-white text-[#1a1a1a] antialiased">
 
-        <header className="bg-[#1e0a4e] sticky top-0 z-40 border-b border-white/10">
+        <header className="bg-white sticky top-0 z-40 border-b border-slate-200">
           <div className="max-w-6xl mx-auto px-4 h-16 flex items-center gap-4">
             <Link href="/" className="shrink-0 flex items-center gap-3">
-              <Image src="/gol-purple.png" alt="" width={36} height={36} priority className="shrink-0" />
-              <span className="text-white font-bold text-lg leading-tight tracking-tight">
+              <div className="relative w-9 h-9 shrink-0 overflow-hidden">
+                <Image src="/gol-wht.png" alt="Grace Online Library" fill priority style={{ objectFit: 'cover', objectPosition: 'left center' }} />
+              </div>
+              <span className="text-[#1a1a1a] font-bold text-lg leading-tight tracking-tight">
                 GraceOnlineLibrary
               </span>
             </Link>
@@ -55,12 +57,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </div>
         <BackToTop />
 
-        <footer className="bg-[#0d0520] text-white/50 py-14">
+        <footer className="bg-[#111111] text-white/50 py-14">
           <div className="max-w-6xl mx-auto px-4">
             <div className="flex flex-col sm:flex-row justify-between gap-10 mb-10">
               <div className="max-w-xs">
                 <div className="flex items-center gap-2 mb-3">
-                  <Image src="/gol-purple.png" alt="" width={26} height={26} className="opacity-80" />
+                  <div className="relative w-9 h-9 shrink-0 overflow-hidden">
+                    <Image src="/gol-wht.png" alt="" fill style={{ objectFit: 'cover', objectPosition: 'left center' }} />
+                  </div>
                   <span className="text-white font-bold text-sm">GraceOnlineLibrary</span>
                 </div>
                 <p className="text-sm text-white/40 leading-relaxed">

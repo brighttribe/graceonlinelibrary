@@ -28,20 +28,14 @@ export default async function ArticlesPage() {
 
   return (
     <main>
-      <div className="relative overflow-hidden text-white" style={{ background: 'radial-gradient(ellipse 140% 120% at 50% 10%, #3b1a8f 0%, #1e0a4e 45%, #0d0520 75%, #050212 100%)' }}>
-        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-        <svg className="absolute top-0 right-0 w-[480px] h-[480px] pointer-events-none" viewBox="0 0 480 480" fill="none" aria-hidden="true">
-          <circle cx="380" cy="100" r="200" stroke="rgba(139,92,246,0.04)" strokeWidth="60" />
-          <circle cx="420" cy="60"  r="140" stroke="rgba(139,92,246,0.04)" strokeWidth="40" />
-          <circle cx="340" cy="140" r="90"  stroke="rgba(139,92,246,0.04)" strokeWidth="30" />
-        </svg>
+      <div className="relative overflow-hidden border-b border-[#e5e7eb]" style={{ background: '#f5f5f5' }}>
         <div className="relative max-w-5xl mx-auto px-4 py-12">
-          <nav className="mb-3 text-sm text-white/40 flex items-center gap-1.5">
-            <Link href="/" className="hover:text-white transition-colors">Home</Link>
+          <nav className="mb-3 text-sm text-slate-400 flex items-center gap-1.5">
+            <Link href="/" className="hover:text-slate-600 transition-colors">Home</Link>
             <span>›</span>
-            <span className="text-white/70">All Articles</span>
+            <span className="text-[#dc2626]">All Articles</span>
           </nav>
-          <h1 className="text-3xl font-bold">All Articles</h1>
+          <h1 className="text-3xl font-bold text-[#1a1a1a]">All Articles</h1>
         </div>
       </div>
 
@@ -50,7 +44,7 @@ export default async function ArticlesPage() {
           <div key={cat}>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold text-[#111111]" style={{ fontFamily: "Georgia, serif" }}>{cat}</h2>
-              <Link href={`/category/${slugify(cat)}`} className="text-xs text-[#7c3aed] font-medium hover:underline">
+              <Link href={`/category/${slugify(cat)}`} className="text-xs text-[#dc2626] font-medium hover:underline">
                 View all →
               </Link>
             </div>
@@ -59,7 +53,7 @@ export default async function ArticlesPage() {
                 {byCategory[cat].map((article) => (
                   <li key={article.slug}>
                     <Link href={`/articles/${article.slug}`} className="flex items-baseline justify-between px-5 py-3.5 hover:bg-red-50/50 transition-colors group">
-                      <span className="font-medium text-[#111111] group-hover:text-[#7c3aed] transition-colors text-sm leading-snug pr-4">
+                      <span className="font-medium text-[#111111] group-hover:text-[#dc2626] transition-colors text-sm leading-snug pr-4">
                         {article.title}
                       </span>
                       {article.author && (

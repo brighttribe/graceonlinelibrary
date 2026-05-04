@@ -46,7 +46,7 @@ export default function NotFound() {
 
       <div
         className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden"
-        style={{ background: 'radial-gradient(ellipse at 50% 40%, #2d1060 0%, #1e0a4e 60%, #050212 100%)' }}
+        style={{ background: '#111111' }}
       >
         {/* Grid texture */}
         <div
@@ -58,18 +58,20 @@ export default function NotFound() {
         />
 
         {/* Center glow */}
-        <div className="glow-blob absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] blur-3xl rounded-full pointer-events-none" style={{ background: 'rgba(124,58,237,0.25)' }} />
+        <div className="glow-blob absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] blur-3xl rounded-full pointer-events-none" style={{ background: 'rgba(220,38,38,0.15)' }} />
 
         {/* Floating orbs */}
-        <div className="orb1 absolute top-1/4 left-1/4 w-32 h-32 rounded-full blur-2xl pointer-events-none" style={{ background: 'rgba(124,58,237,0.3)' }} />
-        <div className="orb2 absolute bottom-1/3 right-1/4 w-48 h-48 rounded-full blur-3xl pointer-events-none" style={{ background: 'rgba(109,40,217,0.2)' }} />
-        <div className="orb3 absolute top-1/2 right-1/3 w-24 h-24 rounded-full blur-2xl pointer-events-none" style={{ background: 'rgba(196,181,253,0.25)' }} />
+        <div className="orb1 absolute top-1/4 left-1/4 w-32 h-32 rounded-full blur-2xl pointer-events-none" style={{ background: 'rgba(220,38,38,0.18)' }} />
+        <div className="orb2 absolute bottom-1/3 right-1/4 w-48 h-48 rounded-full blur-3xl pointer-events-none" style={{ background: 'rgba(185,28,28,0.12)' }} />
+        <div className="orb3 absolute top-1/2 right-1/3 w-24 h-24 rounded-full blur-2xl pointer-events-none" style={{ background: 'rgba(252,165,165,0.15)' }} />
 
         {/* Content */}
         <div className="relative z-10 text-center px-6 max-w-lg mx-auto">
 
           <div className="flex items-center justify-center gap-3 mb-10">
-            <Image src="/gol-purple.png" alt="" width={36} height={36} />
+            <div className="relative w-9 h-9 overflow-hidden shrink-0">
+              <Image src="/gol-wht.png" alt="" fill style={{ objectFit: 'cover', objectPosition: 'left center' }} />
+            </div>
             <span className="text-white font-bold text-lg tracking-tight">GraceOnlineLibrary</span>
           </div>
 
@@ -77,11 +79,11 @@ export default function NotFound() {
             <div
               className="flicker text-[120px] md:text-[160px] font-black leading-none tracking-tight select-none"
               style={{
-                background: 'linear-gradient(135deg, #c4b5fd 0%, #7c3aed 50%, #ddd6fe 100%)',
+                background: 'linear-gradient(135deg, #fca5a5 0%, #dc2626 50%, #991b1b 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
-                filter: 'drop-shadow(0 0 40px rgba(124,58,237,0.5))',
+                filter: 'drop-shadow(0 0 40px rgba(220,38,38,0.4))',
               }}
             >
               404
@@ -90,14 +92,14 @@ export default function NotFound() {
             <h1 className="text-3xl md:text-4xl font-bold text-white mt-2 mb-4">
               Thou hast wandered from the path.
             </h1>
-            <p className="text-purple-200 text-base leading-relaxed mb-10 max-w-sm mx-auto">
+            <p className="text-red-200 text-base leading-relaxed mb-10 max-w-sm mx-auto">
               That page doesn&apos;t exist or has been moved. Let&apos;s get you back to the library.
             </p>
 
             <div className="flex items-center justify-center">
               <Link
                 href="/"
-                className="px-6 py-3 text-sm font-semibold text-white bg-[#7c3aed] hover:bg-[#6d28d9] rounded-xl transition-colors"
+                className="px-6 py-3 text-sm font-semibold text-white bg-[#dc2626] hover:bg-[#b91c1c] rounded-xl transition-colors"
               >
                 Back to the Library
               </Link>

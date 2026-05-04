@@ -89,14 +89,14 @@ export default function MobileMenu() {
         className="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5 shrink-0"
         aria-label="Open menu"
       >
-        <span className="block w-6 h-0.5 bg-white rounded-full" />
-        <span className="block w-6 h-0.5 bg-white rounded-full" />
-        <span className="block w-6 h-0.5 bg-white rounded-full" />
+        <span className="block w-6 h-0.5 bg-[#1a1a1a] rounded-full" />
+        <span className="block w-6 h-0.5 bg-[#1a1a1a] rounded-full" />
+        <span className="block w-6 h-0.5 bg-[#1a1a1a] rounded-full" />
       </button>
 
       <div onClick={() => setOpen(false)} className={`fixed inset-0 bg-black/50 z-50 transition-opacity duration-300 ${open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} />
 
-      <div className={`fixed top-0 right-0 h-full w-80 bg-[#1e0a4e] z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${open ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div className={`fixed top-0 right-0 h-full w-80 bg-[#111111] z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${open ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="flex justify-between items-center px-6 h-16 border-b border-white/10 shrink-0">
           <span className="text-white/60 text-sm font-medium uppercase tracking-wider">Menu</span>
           <button onClick={() => setOpen(false)} className="w-9 h-9 flex items-center justify-center text-white/60 hover:text-white transition-colors" aria-label="Close menu">

@@ -113,29 +113,23 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
   return (
     <main>
       {/* Hero */}
-      <div className="relative overflow-hidden text-white" style={{ background: 'radial-gradient(ellipse 140% 120% at 50% 10%, #3b1a8f 0%, #1e0a4e 45%, #0d0520 75%, #050212 100%)' }}>
-        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-        <svg className="absolute top-0 right-0 w-[480px] h-[480px] pointer-events-none" viewBox="0 0 480 480" fill="none" aria-hidden="true">
-          <circle cx="380" cy="100" r="200" stroke="rgba(139,92,246,0.04)" strokeWidth="60" />
-          <circle cx="420" cy="60"  r="140" stroke="rgba(139,92,246,0.04)" strokeWidth="40" />
-          <circle cx="340" cy="140" r="90"  stroke="rgba(139,92,246,0.04)" strokeWidth="30" />
-        </svg>
+      <div className="relative overflow-hidden border-b border-[#e5e7eb]" style={{ background: '#f5f5f5' }}>
         <div className="relative max-w-5xl mx-auto px-4 pt-6 pb-10">
-          <nav className="mb-5 text-sm text-white/40 flex items-center gap-1.5 flex-wrap">
-            <Link href="/" className="hover:text-white transition-colors">Home</Link>
+          <nav className="mb-5 text-sm text-slate-400 flex items-center gap-1.5 flex-wrap">
+            <Link href="/" className="hover:text-slate-600 transition-colors">Home</Link>
             <span>›</span>
-            <Link href="/topics" className="hover:text-white transition-colors">Topics</Link>
+            <Link href="/topics" className="hover:text-slate-600 transition-colors">Topics</Link>
             {breadcrumb.map((crumb) => (
               <span key={crumb.href} className="contents">
                 <span>›</span>
-                <Link href={crumb.href} className="hover:text-white transition-colors">{crumb.label}</Link>
+                <Link href={crumb.href} className="hover:text-slate-600 transition-colors">{crumb.label}</Link>
               </span>
             ))}
             <span>›</span>
-            <span className="text-white/70">{categoryName}</span>
+            <span className="text-[#dc2626]">{categoryName}</span>
           </nav>
-          <h1 className="text-3xl sm:text-4xl font-bold leading-tight mb-3">{categoryName}</h1>
-          <p className="text-white/50 text-sm">
+          <h1 className="text-3xl sm:text-4xl font-bold leading-tight mb-3 text-[#1a1a1a]">{categoryName}</h1>
+          <p className="text-slate-500 text-sm">
             {subCats.length > 0 ? `${totalCount} articles across ${subCats.length} sub-topics` : `${articles.length} ${articles.length === 1 ? 'article' : 'articles'}`}
           </p>
         </div>
@@ -156,12 +150,12 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
                     <Link
                       key={sub.slug}
                       href={`/category/${sub.slug}`}
-                      className="group flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 hover:border-[#7c3aed] hover:bg-[#faf8ff] transition-all shadow-sm"
+                      className="group flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 hover:border-[#dc2626] hover:bg-[#fff5f5] transition-all shadow-sm"
                     >
-                      <span className="text-sm font-medium text-[#111111] group-hover:text-[#7c3aed] transition-colors leading-snug">
+                      <span className="text-sm font-medium text-[#111111] group-hover:text-[#dc2626] transition-colors leading-snug">
                         {sub.name}
                       </span>
-                      <span className="ml-3 shrink-0 text-xs font-semibold text-white bg-[#7c3aed] group-hover:bg-[#6d28d9] rounded-full px-2 py-0.5 transition-colors">
+                      <span className="ml-3 shrink-0 text-xs font-semibold text-white bg-[#dc2626] group-hover:bg-[#b91c1c] rounded-full px-2 py-0.5 transition-colors">
                         {sub.count}
                       </span>
                     </Link>
@@ -182,14 +176,14 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
                   <ul className="divide-y divide-slate-100">
                     {articles.map((article, i) => (
                       <li key={article.slug} className={i % 2 === 1 ? 'bg-slate-100' : ''}>
-                        <Link href={`/articles/${article.slug}`} className="block px-6 py-3.5 hover:bg-[#faf8ff] transition-colors group">
-                          <p className="font-semibold text-[#111111] group-hover:text-[#7c3aed] transition-colors leading-snug text-sm">
+                        <Link href={`/articles/${article.slug}`} className="block px-6 py-3.5 hover:bg-[#fff5f5] transition-colors group">
+                          <p className="font-semibold text-[#111111] group-hover:text-[#dc2626] transition-colors leading-snug text-sm">
                             {article.title}
                           </p>
                           {(article.author || article.content) && (
                             <p className="text-xs text-slate-400 mt-0.5">
                               {article.author}
-                              {article.author && <span className="mx-1.5 text-[#7c3aed]">·</span>}
+                              {article.author && <span className="mx-1.5 text-[#dc2626]">·</span>}
                               {readingTime(article.content ?? '')} min
                             </p>
                           )}
@@ -212,23 +206,23 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
               <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
                 <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">
                   {parentName && parentSlug && (
-                    <Link href={`/category/${parentSlug}`} className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest hover:text-[#7c3aed] transition-colors">
+                    <Link href={`/category/${parentSlug}`} className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest hover:text-[#dc2626] transition-colors">
                       {parentName}
                     </Link>
                   )}
                 </div>
                 <ul className="divide-y divide-slate-100">
                   <li>
-                    <span className="flex items-center justify-between px-4 py-2.5 text-xs font-semibold text-[#7c3aed] bg-[#f5f3ff]">
+                    <span className="flex items-center justify-between px-4 py-2.5 text-xs font-semibold text-[#dc2626] bg-[#fef2f2]">
                       <span>{categoryName}</span>
-                      <span className="text-[#7c3aed]">{articles.length}</span>
+                      <span className="text-[#dc2626]">{articles.length}</span>
                     </span>
                   </li>
                   {siblings.map((s) => (
                     <li key={s.slug}>
-                      <Link href={`/category/${s.slug}`} className="flex items-center justify-between px-4 py-2.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-[#7c3aed] transition-colors group">
+                      <Link href={`/category/${s.slug}`} className="flex items-center justify-between px-4 py-2.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-[#dc2626] transition-colors group">
                         <span className="leading-snug">{s.name}</span>
-                        <span className="ml-2 shrink-0 text-slate-500 group-hover:text-[#a78bfa]">{s.count}</span>
+                        <span className="ml-2 shrink-0 text-slate-500 group-hover:text-[#fca5a5]">{s.count}</span>
                       </Link>
                     </li>
                   ))}

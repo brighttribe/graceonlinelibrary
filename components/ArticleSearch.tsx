@@ -57,7 +57,7 @@ export default function ArticleSearch({ large = false }: { large?: boolean }) {
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => results.length > 0 && setOpen(true)}
           placeholder="Search articles…"
-          className={`w-full bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed] focus:border-transparent shadow-sm ${
+          className={`w-full bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#dc2626] focus:border-transparent shadow-sm ${
             large ? 'pl-11 pr-4 py-4 text-lg' : 'pl-9 pr-4 py-1.5 text-base'
           }`}
         />
@@ -71,7 +71,7 @@ export default function ArticleSearch({ large = false }: { large?: boolean }) {
                 onClick={() => select(r.slug)}
               >
                 <span className="block font-medium text-slate-900 text-sm">{r.title}</span>
-                {r.category && <span className="text-xs text-[#7c3aed]">{r.category}</span>}
+                {r.category && <span className="text-xs text-[#dc2626]">{r.category}</span>}
               </button>
             </li>
           ))}

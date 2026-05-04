@@ -32,13 +32,13 @@ export default async function AuthorBio({ authorName }: { authorName: string }) 
     <div
       className="rounded-xl px-6 py-5"
       style={{
-        background: '#f5f3ff',
-        borderLeft: '4px solid #7c3aed',
+        background: '#fef2f2',
+        borderLeft: '4px solid #dc2626',
       }}
     >
       <p
         className="text-[10px] font-semibold uppercase tracking-widest mb-2"
-        style={{ color: '#7c3aed' }}
+        style={{ color: '#dc2626' }}
       >
         About the Author
       </p>
@@ -46,12 +46,12 @@ export default async function AuthorBio({ authorName }: { authorName: string }) 
       {author.slug ? (
         <Link
           href={`/author/${author.slug}`}
-          className="text-base font-bold text-[#1e0a4e] hover:text-[#7c3aed] transition-colors"
+          className="text-base font-bold text-[#1a1a1a] hover:text-[#dc2626] transition-colors"
         >
           {author.name}
         </Link>
       ) : (
-        <p className="text-base font-bold text-[#1e0a4e]">{author.name}</p>
+        <p className="text-base font-bold text-[#1a1a1a]">{author.name}</p>
       )}
 
       {author.bio && (
@@ -69,7 +69,7 @@ export default async function AuthorBio({ authorName }: { authorName: string }) 
           {author.bio_long && (
             <Link
               href={`/author/${author.slug}`}
-              className="text-xs font-semibold text-[#7c3aed] hover:underline"
+              className="text-xs font-semibold text-[#dc2626] hover:underline"
             >
               Read full bio &rarr;
             </Link>
@@ -77,7 +77,7 @@ export default async function AuthorBio({ authorName }: { authorName: string }) 
           {(author.article_count ?? 0) > 1 && (
             <Link
               href={`/author/${author.slug}`}
-              className="text-xs font-semibold text-[#7c3aed] hover:underline"
+              className="text-xs font-semibold text-[#dc2626] hover:underline"
             >
               All articles by {author.name} &rarr;
             </Link>

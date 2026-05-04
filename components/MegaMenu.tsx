@@ -125,7 +125,7 @@ export default function MegaMenu() {
         onMouseEnter={() => { cancelClose(); setOpen(true) }}
         onClick={() => setOpen((v) => !v)}
         className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-sm font-medium transition-colors ${
-          open ? 'text-white bg-white/10' : 'text-white/70 hover:text-white hover:bg-white/5'
+          open ? 'text-slate-900 bg-slate-100' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
         }`}
       >
         Topics
@@ -135,16 +135,16 @@ export default function MegaMenu() {
         </svg>
       </button>
 
-      <Link href="/authors" className="px-3 py-1.5 rounded text-sm font-medium text-white/70 hover:text-white hover:bg-white/5 transition-colors whitespace-nowrap">
+      <Link href="/authors" className="px-3 py-1.5 rounded text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors whitespace-nowrap">
         Authors
       </Link>
-      <Link href="/about" className="px-3 py-1.5 rounded text-sm font-medium text-white/70 hover:text-white hover:bg-white/5 transition-colors whitespace-nowrap">
+      <Link href="/about" className="px-3 py-1.5 rounded text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors whitespace-nowrap">
         About
       </Link>
 
       {open && (
         <div
-          className="fixed top-16 left-0 right-0 bg-[#0a0218] border-b border-white/10 shadow-2xl z-50"
+          className="fixed top-16 left-0 right-0 bg-white border-b border-slate-200 shadow-lg z-50"
           onMouseEnter={cancelClose}
           onMouseLeave={scheduleClose}
         >
@@ -157,19 +157,19 @@ export default function MegaMenu() {
                   <Link
                     key={section.slug}
                     href={`/category/${section.slug}`}
-                    className="group flex items-start gap-3 rounded-xl p-4 hover:bg-white/5 transition-colors"
+                    className="group flex items-start gap-3 rounded-xl p-4 hover:bg-slate-50 transition-colors"
                   >
-                    <span className="text-[#7c3aed] group-hover:text-[#a78bfa] transition-colors mt-0.5 shrink-0">
+                    <span className="text-[#dc2626] group-hover:text-[#fca5a5] transition-colors mt-0.5 shrink-0">
                       {section.icon}
                     </span>
                     <div>
-                      <p className="text-white font-semibold text-[14px] mb-1.5 group-hover:text-[#a78bfa] transition-colors">
+                      <p className="text-slate-800 font-semibold text-[14px] mb-1.5 group-hover:text-[#dc2626] transition-colors">
                         {section.label}
                       </p>
-                      <p className="text-white/35 text-[12px] leading-relaxed">
+                      <p className="text-slate-400 text-[12px] leading-relaxed">
                         {preview.join(' · ')}
                         {more > 0 && (
-                          <span className="text-white/20"> · +{more} more</span>
+                          <span className="text-slate-300"> · +{more} more</span>
                         )}
                       </p>
                     </div>

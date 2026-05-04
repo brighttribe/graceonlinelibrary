@@ -32,9 +32,9 @@ export default async function SeriesNav({
     <div className="border border-slate-200 rounded-2xl overflow-hidden mt-10">
       <div
         className="px-5 py-3 flex items-center gap-2"
-        style={{ background: '#f5f3ff', borderBottom: '1px solid #e2e8f0' }}
+        style={{ background: '#fef2f2', borderBottom: '1px solid #e2e8f0' }}
       >
-        <span className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: '#7c3aed' }}>
+        <span className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: '#dc2626' }}>
           In this series
         </span>
         <span className="text-[10px] text-slate-400 font-medium truncate">— {seriesName}</span>
@@ -45,12 +45,12 @@ export default async function SeriesNav({
           const isCurrent = part.slug === currentSlug
           const label = part.title
           return (
-            <li key={part.id} className={isCurrent ? 'bg-[#faf8ff]' : 'bg-white'}>
+            <li key={part.id} className={isCurrent ? 'bg-[#fff5f5]' : 'bg-white'}>
               {isCurrent ? (
                 <div className="flex items-baseline gap-3 px-5 py-3">
                   <span
                     className="shrink-0 text-[10px] font-bold px-1.5 py-0.5 rounded"
-                    style={{ background: '#7c3aed', color: '#fff' }}
+                    style={{ background: '#dc2626', color: '#fff' }}
                   >
                     {i + 1}
                   </span>
@@ -59,15 +59,15 @@ export default async function SeriesNav({
               ) : (
                 <Link
                   href={`/articles/${part.slug}`}
-                  className="flex items-baseline gap-3 px-5 py-3 group transition-colors hover:bg-[#faf8ff]"
+                  className="flex items-baseline gap-3 px-5 py-3 group transition-colors hover:bg-[#fff5f5]"
                 >
                   <span
                     className="shrink-0 text-[10px] font-bold px-1.5 py-0.5 rounded transition-colors"
-                    style={{ background: '#ede9fe', color: '#7c3aed' }}
+                    style={{ background: '#fecaca', color: '#dc2626' }}
                   >
                     {i + 1}
                   </span>
-                  <span className="text-sm text-[#111111] group-hover:text-[#7c3aed] transition-colors">
+                  <span className="text-sm text-[#111111] group-hover:text-[#dc2626] transition-colors">
                     {label}
                   </span>
                 </Link>

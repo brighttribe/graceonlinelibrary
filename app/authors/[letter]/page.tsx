@@ -54,32 +54,17 @@ export default async function AuthorsLetterPage({ params }: { params: Promise<{ 
 
   return (
     <main>
-      <div
-        className="relative overflow-hidden text-white"
-        style={{ background: 'radial-gradient(ellipse 140% 120% at 50% 10%, #3b1a8f 0%, #1e0a4e 45%, #0d0520 75%, #050212 100%)' }}
-      >
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
-            backgroundSize: '40px 40px',
-          }}
-        />
-        <svg className="absolute top-0 right-0 w-[480px] h-[480px] pointer-events-none" viewBox="0 0 480 480" fill="none" aria-hidden="true">
-          <circle cx="380" cy="100" r="200" stroke="rgba(139,92,246,0.04)" strokeWidth="60" />
-          <circle cx="420" cy="60"  r="140" stroke="rgba(139,92,246,0.04)" strokeWidth="40" />
-          <circle cx="340" cy="140" r="90"  stroke="rgba(139,92,246,0.04)" strokeWidth="30" />
-        </svg>
+      <div className="relative overflow-hidden border-b border-[#e5e7eb]" style={{ background: '#f5f5f5' }}>
         <div className="relative max-w-5xl mx-auto px-4 py-12">
-          <nav className="mb-3 text-sm text-white/40 flex items-center gap-1.5">
-            <Link href="/" className="hover:text-white transition-colors">Home</Link>
+          <nav className="mb-3 text-sm text-slate-400 flex items-center gap-1.5">
+            <Link href="/" className="hover:text-slate-600 transition-colors">Home</Link>
             <span>›</span>
-            <Link href="/authors" className="hover:text-white transition-colors">Authors</Link>
+            <Link href="/authors" className="hover:text-slate-600 transition-colors">Authors</Link>
             <span>›</span>
-            <span className="text-white/70">{l}</span>
+            <span className="text-[#dc2626]">{l}</span>
           </nav>
-          <h1 className="text-3xl font-bold mb-2">Authors — {l}</h1>
-          <p className="text-white/50 text-sm">{authors.length} {authors.length === 1 ? 'author' : 'authors'}</p>
+          <h1 className="text-3xl font-bold mb-2 text-[#1a1a1a]">Authors — {l}</h1>
+          <p className="text-slate-500 text-sm">{authors.length} {authors.length === 1 ? 'author' : 'authors'}</p>
         </div>
       </div>
 
@@ -87,7 +72,7 @@ export default async function AuthorsLetterPage({ params }: { params: Promise<{ 
 
         {/* Letter nav */}
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 relative overflow-hidden">
-          <div className="absolute inset-x-0 top-0 h-1 rounded-t-2xl" style={{ background: 'linear-gradient(90deg, #3b1a8f, #7c3aed, #a78bfa)' }} />
+          <div className="absolute inset-x-0 top-0 h-1 rounded-t-2xl" style={{ background: 'linear-gradient(90deg, #991b1b, #dc2626, #fca5a5)' }} />
           <div className="flex flex-wrap justify-center gap-2 pt-1">
             {LETTERS.map((letter) => {
               const active = allActive.has(letter)
@@ -98,8 +83,8 @@ export default async function AuthorsLetterPage({ params }: { params: Promise<{ 
                   href={`/authors/${letter.toLowerCase()}`}
                   className={`flex items-center justify-center w-11 h-11 rounded-xl font-bold text-sm transition-all ${
                     current
-                      ? 'bg-[#7c3aed] text-white border border-[#7c3aed] shadow-md'
-                      : 'bg-slate-50 border border-slate-200 text-slate-700 hover:bg-[#7c3aed] hover:text-white hover:border-[#7c3aed] hover:-translate-y-0.5 hover:shadow-md'
+                      ? 'bg-[#dc2626] text-white border border-[#dc2626] shadow-md'
+                      : 'bg-slate-50 border border-slate-200 text-slate-700 hover:bg-[#dc2626] hover:text-white hover:border-[#dc2626] hover:-translate-y-0.5 hover:shadow-md'
                   }`}
                 >
                   {letter}
@@ -122,10 +107,10 @@ export default async function AuthorsLetterPage({ params }: { params: Promise<{ 
             <Link
               key={author.slug}
               href={`/author/${author.slug}`}
-              className="group flex flex-col bg-white border border-slate-200 rounded-xl px-5 py-4 hover:border-[#7c3aed] hover:shadow-sm transition-all"
+              className="group flex flex-col bg-white border border-slate-200 rounded-xl px-5 py-4 hover:border-[#dc2626] hover:shadow-sm transition-all"
             >
               <div className="flex items-baseline justify-between gap-3">
-                <span className="font-semibold text-[#111111] group-hover:text-[#7c3aed] transition-colors leading-snug text-sm">
+                <span className="font-semibold text-[#111111] group-hover:text-[#dc2626] transition-colors leading-snug text-sm">
                   {author.name}
                 </span>
                 <span className="text-xs text-slate-400 shrink-0">

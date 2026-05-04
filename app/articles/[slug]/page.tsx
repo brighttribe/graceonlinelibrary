@@ -85,31 +85,25 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
 
       {/* Hero */}
-      <div className="relative overflow-hidden text-white" style={{ background: 'radial-gradient(ellipse 140% 120% at 50% 10%, #3b1a8f 0%, #1e0a4e 45%, #0d0520 75%, #050212 100%)' }}>
-        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-        <svg className="absolute top-0 right-0 w-[480px] h-[480px] pointer-events-none" viewBox="0 0 480 480" fill="none" aria-hidden="true">
-          <circle cx="380" cy="100" r="200" stroke="rgba(139,92,246,0.04)" strokeWidth="60" />
-          <circle cx="420" cy="60"  r="140" stroke="rgba(139,92,246,0.04)" strokeWidth="40" />
-          <circle cx="340" cy="140" r="90"  stroke="rgba(139,92,246,0.04)" strokeWidth="30" />
-        </svg>
+      <div className="relative overflow-hidden border-b border-[#e5e7eb]" style={{ background: '#f5f5f5' }}>
         <div className="relative max-w-5xl mx-auto px-4 pt-6 pb-10">
-          <nav className="mb-5 text-sm text-white/40 flex items-center gap-1.5 flex-wrap">
-            <Link href="/" className="hover:text-white transition-colors">Home</Link>
+          <nav className="mb-5 text-sm text-slate-400 flex items-center gap-1.5 flex-wrap">
+            <Link href="/" className="hover:text-slate-600 transition-colors">Home</Link>
             <span>›</span>
             {article.category && (
               <>
-                <Link href={`/category/${categorySlug(article.category)}`} className="hover:text-white transition-colors">{article.category}</Link>
+                <Link href={`/category/${categorySlug(article.category)}`} className="hover:text-slate-600 transition-colors">{article.category}</Link>
                 <span>›</span>
               </>
             )}
           </nav>
-          <h1 className="text-3xl sm:text-4xl font-bold leading-tight mb-4 max-w-3xl">{article.title}</h1>
-          <p className="text-white/50 text-sm">
+          <h1 className="text-3xl sm:text-4xl font-bold leading-tight mb-4 max-w-3xl text-[#1a1a1a]">{article.title}</h1>
+          <p className="text-slate-500 text-sm">
             {article.author && (
               <>
                 {'by '}
                 {authorRow?.slug && (authorRow.article_count ?? 0) > 1 ? (
-                  <Link href={`/author/${authorRow.slug}`} className="text-white/50 hover:text-white/80 transition-colors">{article.author}</Link>
+                  <Link href={`/author/${authorRow.slug}`} className="text-slate-500 hover:text-slate-700 transition-colors">{article.author}</Link>
                 ) : article.author}
                 <span className="mx-2 opacity-40">·</span>
               </>
@@ -150,11 +144,11 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                         href={`/articles/${part.slug}`}
                         className={`flex items-start gap-2.5 px-4 py-2.5 text-xs transition-colors ${
                           part.slug === slug
-                            ? 'bg-[#f5f3ff] text-[#7c3aed] font-semibold'
-                            : 'text-slate-600 hover:bg-slate-50 hover:text-[#7c3aed]'
+                            ? 'bg-[#fef2f2] text-[#dc2626] font-semibold'
+                            : 'text-slate-600 hover:bg-slate-50 hover:text-[#dc2626]'
                         }`}
                       >
-                        <span className={`shrink-0 w-4 text-right ${part.slug === slug ? 'text-[#7c3aed]' : 'text-slate-300'}`}>{i + 1}.</span>
+                        <span className={`shrink-0 w-4 text-right ${part.slug === slug ? 'text-[#dc2626]' : 'text-slate-300'}`}>{i + 1}.</span>
                         <span className="leading-snug">{part.title}</span>
                       </Link>
                     </li>
@@ -172,7 +166,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 <ul className="divide-y divide-slate-100">
                   {byAuthorData.map((a) => (
                     <li key={a.slug}>
-                      <Link href={`/articles/${a.slug}`} className="block px-4 py-2.5 text-xs text-slate-600 hover:bg-[#faf8ff] hover:text-[#7c3aed] transition-colors leading-snug">
+                      <Link href={`/articles/${a.slug}`} className="block px-4 py-2.5 text-xs text-slate-600 hover:bg-[#fff5f5] hover:text-[#dc2626] transition-colors leading-snug">
                         {a.title}
                       </Link>
                     </li>
@@ -180,7 +174,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 </ul>
                 {authorRow?.slug && (
                   <div className="px-4 py-2.5 border-t border-slate-100">
-                    <Link href={`/author/${authorRow.slug}`} className="text-xs text-[#7c3aed] hover:text-[#6d28d9] font-medium">All articles →</Link>
+                    <Link href={`/author/${authorRow.slug}`} className="text-xs text-[#dc2626] hover:text-[#b91c1c] font-medium">All articles →</Link>
                   </div>
                 )}
               </div>
@@ -195,15 +189,15 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 <ul className="divide-y divide-slate-100">
                   {moreCatData.map((a) => (
                     <li key={a.slug}>
-                      <Link href={`/articles/${a.slug}`} className="block px-4 py-2.5 hover:bg-[#faf8ff] transition-colors group">
-                        <span className="text-xs text-slate-600 group-hover:text-[#7c3aed] leading-snug block">{a.title}</span>
+                      <Link href={`/articles/${a.slug}`} className="block px-4 py-2.5 hover:bg-[#fff5f5] transition-colors group">
+                        <span className="text-xs text-slate-600 group-hover:text-[#dc2626] leading-snug block">{a.title}</span>
                         {a.author && <span className="text-[11px] text-slate-400 mt-0.5 block">{a.author}</span>}
                       </Link>
                     </li>
                   ))}
                 </ul>
                 <div className="px-4 py-2.5 border-t border-slate-100">
-                  <Link href={`/category/${categorySlug(article.category)}`} className="text-xs text-[#7c3aed] hover:text-[#6d28d9] font-medium">All {article.category} articles →</Link>
+                  <Link href={`/category/${categorySlug(article.category)}`} className="text-xs text-[#dc2626] hover:text-[#b91c1c] font-medium">All {article.category} articles →</Link>
                 </div>
               </div>
             )}
