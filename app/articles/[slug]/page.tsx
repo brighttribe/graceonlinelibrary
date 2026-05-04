@@ -55,7 +55,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       ? supabase.from('articles').select('title, slug').eq('status', 'published').ilike('author', article.author).neq('slug', slug).order('title').limit(6)
       : Promise.resolve({ data: [] }),
     article.category
-      ? supabase.from('articles').select('title, slug').eq('status', 'published').eq('category', article.category).neq('slug', slug).order('title').limit(6)
+      ? supabase.from('articles').select('title, slug, author').eq('status', 'published').eq('category', article.category).neq('slug', slug).order('title').limit(6)
       : Promise.resolve({ data: [] }),
   ])
 
@@ -195,8 +195,9 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 <ul className="divide-y divide-slate-100">
                   {moreCatData.map((a) => (
                     <li key={a.slug}>
-                      <Link href={`/articles/${a.slug}`} className="block px-4 py-2.5 text-xs text-slate-600 hover:bg-[#faf8ff] hover:text-[#7c3aed] transition-colors leading-snug">
-                        {a.title}
+                      <Link href={`/articles/${a.slug}`} className="block px-4 py-2.5 hover:bg-[#faf8ff] transition-colors group">
+                        <span className="text-xs text-slate-600 group-hover:text-[#7c3aed] leading-snug block">{a.title}</span>
+                        {a.author && <span className="text-[11px] text-slate-400 mt-0.5 block">{a.author}</span>}
                       </Link>
                     </li>
                   ))}
