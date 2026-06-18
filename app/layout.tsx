@@ -18,7 +18,15 @@ export const metadata: Metadata = {
   },
   description: 'A curated library of Reformed, Puritan, and Baptist theological articles. Serving the church for over 30 years.',
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://graceonlinelibrary.org'),
-  openGraph: { siteName: 'Grace Online Library', type: 'website' },
+  openGraph: {
+    siteName: 'Grace Online Library',
+    type: 'website',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Grace Online Library — Reformed & Puritan Theological Resources' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/og-image.png'],
+  },
   icons: { icon: '/gol-icon-red.png' },
   alternates: {
     types: {

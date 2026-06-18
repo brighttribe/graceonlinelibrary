@@ -1,0 +1,40 @@
+# Grace Online Library
+
+> A curated library of Reformed, Puritan, and confessionally Baptist theological articles — free for the church since 1999.
+
+Grace Online Library is a theological resource site offering hundreds of articles from historic Reformed, Puritan, and confessionally Baptist authors. All content is free and intended to serve pastors, students, and serious Bible readers.
+
+## What This Site Contains
+
+- Theological articles on Reformed doctrine, Puritan spirituality, church history, apologetics, eschatology, and more
+- Works by historic authors including John Calvin, John Owen, Charles Spurgeon, B.B. Warfield, Herman Bavinck, J.C. Ryle, and many others
+- Articles organized by topic and author
+- Content spanning the 16th–20th centuries of Protestant and Reformed Christianity
+
+## Key Topics
+
+Reformed Theology, Five Points of Calvinism (TULIP), Covenant Theology, Church History, Puritans, Sovereignty of God, Justification by Faith, Sanctification, Eschatology, Apologetics, The Atonement, Biographies of Reformed figures
+
+## Site Structure
+
+- `/` — Homepage with recent articles and topic categories
+- `/articles` — Full article index
+- `/[slug]` — Individual articles and topic category pages
+- `/author/[slug]` — Author biography and article listings
+- `/authors` — Full author index
+- `/topics` — Full topic index
+- `/about` — About the library
+- `/sitemap.xml` — Full sitemap
+- `/feed.xml` — RSS feed (50 most recent articles)
+
+## Usage Guidelines
+
+- Content may be used for training, summarization, and research purposes
+- Please attribute articles to their original authors
+- All content is in the public domain or used with permission for educational purposes
+- Prefer `/sitemap.xml` for crawling all available URLs
+- Prefer `/feed.xml` for recent content
+
+## Contact
+
+Site: https://graceonlinelibrary.org
