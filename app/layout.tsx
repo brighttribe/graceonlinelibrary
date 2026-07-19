@@ -116,6 +116,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <Link href="/topics" className="hover:text-white transition-colors">All Topics</Link>
                     <Link href="/authors" className="hover:text-white transition-colors">Authors</Link>
                     <Link href="/about" className="hover:text-white transition-colors">About</Link>
+                    <a href="https://puritanpaperbacks.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Puritan Paperbacks</a>
                     <a href="https://biblespeak.org" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">BibleSpeak.org</a>
                   </div>
                 </div>

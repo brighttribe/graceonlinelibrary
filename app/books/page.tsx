@@ -118,7 +118,24 @@ export default async function BooksHubPage() {
           ))}
         </div>
 
-        <p className="mt-14 text-center text-[11px] leading-relaxed text-slate-400">
+        <a
+          href="https://puritanpaperbacks.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group mt-14 block rounded-2xl border border-slate-200 bg-[#faf7f5] p-6 text-center transition-colors hover:border-[#dc2626] sm:p-8"
+        >
+          <p className="text-[11px] font-semibold uppercase tracking-widest text-[#dc2626]">Our Sister Site</p>
+          <h2 className="mt-2 text-xl font-bold text-[#111111]">Explore the Puritan Paperbacks Collection</h2>
+          <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-slate-600">
+            Browse the full Banner of Truth Puritan Paperbacks series with reading guides, author collections, and
+            thousands of quotes at PuritanPaperbacks.com.
+          </p>
+          <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#dc2626] group-hover:text-[#b91c1c]">
+            Visit Puritan Paperbacks &rarr;
+          </span>
+        </a>
+
+        <p className="mt-10 text-center text-[11px] leading-relaxed text-slate-400">
           Grace Online Library is an Amazon Associate. Purchases through these links help support the library at no
           extra cost to you.
         </p>
