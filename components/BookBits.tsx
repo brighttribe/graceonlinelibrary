@@ -13,16 +13,21 @@ export function BookCover({
   className?: string
   sizes?: string
 }) {
+  // Every cover renders in a uniform 2:3 box so grids line up cleanly. Covers
+  // that are not exactly 2:3 fill the box (object-cover) rather than shrinking.
   if (book.cover_url) {
     return (
-      <Image
-        src={book.cover_url}
-        alt={`${book.title}${book.author ? ' by ' + book.author : ''}`}
-        width={300}
-        height={450}
-        sizes={sizes}
-        className={`h-auto w-full rounded-md object-contain shadow-md ring-1 ring-black/5 ${className}`}
-      />
+      <div
+        className={`relative aspect-[2/3] w-full overflow-hidden rounded-md bg-slate-100 shadow-md ring-1 ring-black/5 ${className}`}
+      >
+        <Image
+          src={book.cover_url}
+          alt={`${book.title}${book.author ? ' by ' + book.author : ''}`}
+          fill
+          sizes={sizes}
+          className="object-cover"
+        />
+      </div>
     )
   }
   // Text fallback cover for the handful of books with no image.
