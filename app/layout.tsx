@@ -112,6 +112,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <div>
                   <p className="text-white/80 font-semibold mb-3 uppercase text-xs tracking-wider">Site</p>
                   <div className="flex flex-col gap-2">
+                    <Link href="/books" className="hover:text-white transition-colors">Reading Guides</Link>
                     <Link href="/topics" className="hover:text-white transition-colors">All Topics</Link>
                     <Link href="/authors" className="hover:text-white transition-colors">Authors</Link>
                     <Link href="/about" className="hover:text-white transition-colors">About</Link>

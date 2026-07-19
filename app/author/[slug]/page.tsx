@@ -5,6 +5,8 @@ import { createSupabaseClient } from '@/lib/supabase'
 import { prepareContent } from '@/lib/content'
 import { categorySlug } from '@/lib/categories'
 import type { ArticlePreview } from '@/lib/types'
+import { booksByAuthor } from '@/lib/books'
+import AuthorBooksShelf from '@/components/AuthorBooksShelf'
 
 type Author = {
   id: string
@@ -64,6 +66,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
     .order('title')
 
   const articles = (data ?? []) as ArticlePreview[]
+  const authorBooks = await booksByAuthor(author.name)
 
   // Group by category
   const byCategory: Record<string, ArticlePreview[]> = {}
@@ -139,6 +142,12 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
           <div className="flex-1 min-w-0 space-y-10">
             {bioContent && (
               <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: prepareContent(bioContent) }} />
+            )}
+
+            {authorBooks.length > 0 && (
+              <div className="rounded-2xl border border-slate-200 bg-[#faf7f5] p-5 sm:p-6">
+                <AuthorBooksShelf books={authorBooks} authorName={author.name} />
+              </div>
             )}
 
             {categories.length === 0 && (

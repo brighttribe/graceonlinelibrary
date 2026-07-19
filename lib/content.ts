@@ -84,6 +84,25 @@ function wrapLeadWords(html: string): string {
   )
 }
 
+// Splits prepared article HTML after the n-th closing paragraph so a callout
+// can be inserted mid-article. Returns [head, tail]; tail is '' when the
+// article has fewer than n paragraphs (caller then skips the insertion).
+export function splitAfterParagraphs(html: string, n: number): [string, string] {
+  let idx = -1
+  let count = 0
+  const re = /<\/p>/gi
+  let m: RegExpExecArray | null
+  while ((m = re.exec(html))) {
+    count++
+    if (count === n) {
+      idx = m.index + m[0].length
+      break
+    }
+  }
+  if (idx === -1) return [html, '']
+  return [html.slice(0, idx), html.slice(idx)]
+}
+
 export function readingTime(html: string): number {
   const text = html.replace(/<[^>]+>/g, ' ')
   const words = text.trim().split(/\s+/).filter(Boolean).length

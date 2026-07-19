@@ -112,6 +112,7 @@ export default function MobileMenu() {
 
         <div className="px-6 pb-4 flex gap-6 shrink-0 border-b border-white/10">
           <Link href="/articles" className="text-sm font-medium text-white/70 hover:text-white transition-colors">All Articles</Link>
+          <Link href="/books" className="text-sm font-semibold text-[#f87171] hover:text-white transition-colors">Books</Link>
           <Link href="/authors" className="text-sm font-medium text-white/70 hover:text-white transition-colors">Authors</Link>
           <Link href="/about" className="text-sm font-medium text-white/70 hover:text-white transition-colors">About</Link>
         </div>

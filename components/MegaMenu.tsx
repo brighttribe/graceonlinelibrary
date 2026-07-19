@@ -135,6 +135,9 @@ export default function MegaMenu() {
         </svg>
       </button>
 
+      <Link href="/books" className="px-3 py-1.5 rounded text-sm font-semibold text-[#dc2626] hover:text-[#b91c1c] hover:bg-[#fff5f5] transition-colors whitespace-nowrap">
+        Books
+      </Link>
       <Link href="/authors" className="px-3 py-1.5 rounded text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors whitespace-nowrap">
         Authors
       </Link>

@@ -4,8 +4,13 @@ import Link from 'next/link'
 import { createSupabaseClient } from '@/lib/supabase'
 import type { ArticlePreview } from '@/lib/types'
 import { CATEGORY_SLUGS, CATEGORY_CHILDREN, CATEGORY_PARENT, categorySlug } from '@/lib/categories'
-import { prepareContent, readingTime } from '@/lib/content'
+import { prepareContent, readingTime, splitAfterParagraphs } from '@/lib/content'
 import AuthorBio from '@/components/AuthorBio'
+import { articleBookPicks, booksForSlug, booksByAuthor, TIER_ORDER, type RecBook } from '@/lib/books'
+import RecommendedBooksInline from '@/components/RecommendedBooksInline'
+import RecommendedReadingStrip from '@/components/RecommendedReadingStrip'
+import SidebarBookCarousel from '@/components/SidebarBookCarousel'
+import { CategoryBooksTeaser } from '@/components/CategoryBooksModule'
 
 function getCategoryName(slug: string): string | null {
   return CATEGORY_SLUGS[slug] ?? null
@@ -108,6 +113,22 @@ async function CategoryPage({ slug }: { slug: string }) {
     .filter((s) => s.count > 0)
 
   const totalCount = articles.length + Object.values(countMap).reduce((a, b) => a + b, 0)
+
+  // Top-picks book teaser for this topic (links to the full /books/[slug] guide).
+  const guideBooks = await booksForSlug(slug)
+  const teaserPicks: RecBook[] = (() => {
+    const picks: RecBook[] = []
+    for (const t of TIER_ORDER) {
+      const tp = guideBooks[t].find((b) => b.top_pick)
+      if (tp) picks.push(tp)
+    }
+    for (const b of [...guideBooks.basic, ...guideBooks.intermediate, ...guideBooks.advanced]) {
+      if (picks.length >= 5) break
+      if (!picks.find((p) => p.id === b.id)) picks.push(b)
+    }
+    return picks
+  })()
+
   const breadcrumb = parentSlug && parentName
     ? [{ href: `/${parentSlug}`, label: parentName }]
     : []
@@ -175,6 +196,9 @@ async function CategoryPage({ slug }: { slug: string }) {
       <div className="max-w-5xl mx-auto px-4 py-10">
         <div className="flex gap-10 items-start">
           <div className="flex-1 min-w-0 space-y-10">
+            {teaserPicks.length > 0 && (
+              <CategoryBooksTeaser picks={teaserPicks} slug={slug} category={categoryName} />
+            )}
             {subCats.length > 0 && (
               <div>
                 <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">Browse by Sub-topic</h2>
@@ -292,6 +316,23 @@ async function ArticlePage({ slug }: { slug: string }) {
   const html = prepareContent(article.content || '')
   const hasSeries = seriesData && seriesData.length > 1
 
+  // Book recommendations: an inline callout after the intro + an end strip.
+  const picks = await articleBookPicks(article.category)
+  const [bodyHead, bodyTail] = splitAfterParagraphs(html, 3)
+  const showInline = !!picks.inline && bodyTail.length > 0
+
+  // Sidebar carousel: books by this article's author, else the topic picks.
+  const authorBooks = article.author ? await booksByAuthor(article.author) : []
+  const carouselSource = authorBooks.length ? authorBooks : picks.strip
+  const carouselBooks = carouselSource.map((b) => ({
+    id: b.id,
+    title: b.title,
+    author: b.author,
+    cover_url: b.cover_url,
+    affiliate_url: b.affiliate_url,
+  }))
+  const carouselHeading = authorBooks.length ? `Books by ${article.author}` : `Recommended Reading`
+
   const articleBreadcrumbs: { '@type': string; position: number; name: string; item: string }[] = [
     { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
   ]
@@ -357,15 +398,29 @@ async function ArticlePage({ slug }: { slug: string }) {
       <div className="max-w-5xl mx-auto px-4 py-10">
         <div className="flex gap-10 items-start">
           <div className="flex-1 min-w-0">
-            <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: html }} />
+            {showInline ? (
+              <>
+                <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: bodyHead }} />
+                {picks.inline && <RecommendedBooksInline book={picks.inline} />}
+                <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: bodyTail }} />
+              </>
+            ) : (
+              <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: html }} />
+            )}
             {article.author && (
               <div className="mt-12 pt-10 border-t border-slate-200">
                 <AuthorBio authorName={article.author} />
               </div>
             )}
+            {article.category && (
+              <RecommendedReadingStrip books={picks.strip} category={article.category} slug={picks.slug} />
+            )}
           </div>
 
           <aside className="w-64 shrink-0 hidden lg:block space-y-6">
+            {carouselBooks.length > 0 && (
+              <SidebarBookCarousel books={carouselBooks} heading={carouselHeading} />
+            )}
             {hasSeries && (
               <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
                 <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">

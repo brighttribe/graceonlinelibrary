@@ -2,6 +2,8 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { createSupabaseClient } from '@/lib/supabase'
 import type { ArticlePreview } from '@/lib/types'
+import { homepageFeatured } from '@/lib/books'
+import HomepageBooksStrip from '@/components/HomepageBooksStrip'
 
 export const metadata: Metadata = {
   title: 'Grace Online Library — Reformed & Puritan Theological Resources',
@@ -61,6 +63,7 @@ export default async function HomePage() {
     .limit(12)
 
   const articles = (recent ?? []) as ArticlePreview[]
+  const featuredBooks = await homepageFeatured(8)
 
   return (
     <main>
@@ -106,6 +109,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── Recommended Reading ── */}
+      <HomepageBooksStrip books={featuredBooks} />
 
       {/* ── Recent Articles ── */}
       <section className="py-16 px-4 bg-[#f5f5f5]">
