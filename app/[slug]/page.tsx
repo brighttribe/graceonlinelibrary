@@ -6,10 +6,9 @@ import type { ArticlePreview } from '@/lib/types'
 import { CATEGORY_SLUGS, CATEGORY_CHILDREN, CATEGORY_PARENT, categorySlug } from '@/lib/categories'
 import { prepareContent, readingTime, splitAfterParagraphs } from '@/lib/content'
 import AuthorBio from '@/components/AuthorBio'
-import { articleBookPicks, booksForSlug, booksByAuthor, TIER_ORDER, type RecBook } from '@/lib/books'
+import { articleBookPicks, booksForSlug, TIER_ORDER, type RecBook } from '@/lib/books'
 import RecommendedBooksInline from '@/components/RecommendedBooksInline'
 import RecommendedReadingStrip from '@/components/RecommendedReadingStrip'
-import SidebarBookCarousel from '@/components/SidebarBookCarousel'
 import { CategoryBooksTeaser } from '@/components/CategoryBooksModule'
 
 function getCategoryName(slug: string): string | null {
@@ -321,18 +320,6 @@ async function ArticlePage({ slug }: { slug: string }) {
   const [bodyHead, bodyTail] = splitAfterParagraphs(html, 3)
   const showInline = !!picks.inline && bodyTail.length > 0
 
-  // Sidebar carousel: books by this article's author, else the topic picks.
-  const authorBooks = article.author ? await booksByAuthor(article.author) : []
-  const carouselSource = authorBooks.length ? authorBooks : picks.strip
-  const carouselBooks = carouselSource.map((b) => ({
-    id: b.id,
-    title: b.title,
-    author: b.author,
-    cover_url: b.cover_url,
-    affiliate_url: b.affiliate_url,
-  }))
-  const carouselHeading = authorBooks.length ? `Books by ${article.author}` : `Recommended Reading`
-
   const articleBreadcrumbs: { '@type': string; position: number; name: string; item: string }[] = [
     { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
   ]
@@ -418,9 +405,6 @@ async function ArticlePage({ slug }: { slug: string }) {
           </div>
 
           <aside className="w-64 shrink-0 hidden lg:block space-y-6">
-            {carouselBooks.length > 0 && (
-              <SidebarBookCarousel books={carouselBooks} heading={carouselHeading} />
-            )}
             {hasSeries && (
               <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
                 <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">
