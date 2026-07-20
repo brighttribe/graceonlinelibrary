@@ -7,6 +7,7 @@ import { categorySlug } from '@/lib/categories'
 import type { ArticlePreview } from '@/lib/types'
 import { booksByAuthor } from '@/lib/books'
 import AuthorBooksShelf from '@/components/AuthorBooksShelf'
+import UnseenThronePromo from '@/components/UnseenThronePromo'
 
 type Author = {
   id: string
@@ -190,6 +191,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
 
           {/* Sidebar */}
           <aside className="w-64 shrink-0 hidden lg:block space-y-6">
+            <UnseenThronePromo />
 
             {/* Topics */}
             {topCategories.length > 0 && (

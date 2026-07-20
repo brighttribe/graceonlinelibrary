@@ -10,6 +10,7 @@ import { articleBookPicks, booksForSlug, TIER_ORDER, type RecBook } from '@/lib/
 import RecommendedBooksInline from '@/components/RecommendedBooksInline'
 import RecommendedReadingStrip from '@/components/RecommendedReadingStrip'
 import { CategoryBooksTeaser } from '@/components/CategoryBooksModule'
+import UnseenThronePromo from '@/components/UnseenThronePromo'
 
 function getCategoryName(slug: string): string | null {
   return CATEGORY_SLUGS[slug] ?? null
@@ -248,7 +249,8 @@ async function CategoryPage({ slug }: { slug: string }) {
           </div>
 
           {siblings.length > 0 && (
-            <aside className="w-56 shrink-0 hidden lg:block">
+            <aside className="w-56 shrink-0 hidden lg:block space-y-6">
+              <UnseenThronePromo />
               <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
                 <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">
                   {parentName && parentSlug && (
@@ -405,6 +407,7 @@ async function ArticlePage({ slug }: { slug: string }) {
           </div>
 
           <aside className="w-64 shrink-0 hidden lg:block space-y-6">
+            <UnseenThronePromo />
             {hasSeries && (
               <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
                 <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">
