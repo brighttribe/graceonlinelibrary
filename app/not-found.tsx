@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
+import NotFoundTracker from '@/components/NotFoundTracker'
 
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <>
+      <NotFoundTracker />
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
