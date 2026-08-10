@@ -1,6 +1,18 @@
+'use client'
+
 const ASIN = 'B0F31X4Z44'
 const AMAZON_TAG = 'gol016-20'
 const AMAZON_LINK = `https://www.amazon.com/dp/${ASIN}?tag=${AMAZON_TAG}`
+
+declare global {
+  interface Window {
+    posthog?: { capture: (event: string, properties?: Record<string, unknown>) => void }
+  }
+}
+
+function track(placement: 'cover' | 'button') {
+  window.posthog?.capture('unseen_throne_click', { placement, site: 'gol' })
+}
 
 export default function UnseenThronePromo() {
   return (
@@ -9,7 +21,13 @@ export default function UnseenThronePromo() {
         <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">Featured Book</p>
       </div>
       <div className="p-2.5 text-center">
-        <a href={AMAZON_LINK} target="_blank" rel="noopener noreferrer sponsored" className="block group">
+        <a
+          href={AMAZON_LINK}
+          target="_blank"
+          rel="noopener noreferrer sponsored"
+          onClick={() => track('cover')}
+          className="block group"
+        >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/unseen-throne-cover.webp"
@@ -27,6 +45,7 @@ export default function UnseenThronePromo() {
           href={AMAZON_LINK}
           target="_blank"
           rel="noopener noreferrer sponsored"
+          onClick={() => track('button')}
           className="block w-full py-2 rounded-lg bg-[#dc2626] text-white text-xs font-semibold hover:bg-[#b91c1c] transition-colors"
         >
           Buy on Amazon
